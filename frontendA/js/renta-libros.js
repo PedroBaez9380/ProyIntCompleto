@@ -47,15 +47,19 @@ $(document).ready(function() {
 
     $('#boton-guardar').click(function() {
         // Validación de campos vacíos
-        if ($("#fecha-devolucion").val() === "" || $("#id-cliente").val() === "" || $("#id-libro").val() === "") {
+        if ($("#fecha-devolucion").val() === "" || $("#id-cliente").val() === "" 
+        //|| $("#id-libro").val() === ""
+        ) {
             alert("Por favor, completa todos los campos obligatorios.");
             return;
         }
 
         // Validación de ID
         var ID_cliente = $("#id-cliente").val();
-        var ID_libro = $("#id-libro").val();
-        if (!/^\d{1,5}$/.test(ID_cliente) || !/^\d{1,5}$/.test(ID_libro)) {
+        //var ID_libro = $("#id-libro").val();
+        if (!/^\d{1,5}$/.test(ID_cliente) 
+        //|| !/^\d{1,5}$/.test(ID_libro)
+        ) {
             alert("Los campos ID Cliente e ID Libro solo deben contener números y un máximo de 5 caracteres.");
             return;
         }
@@ -122,11 +126,8 @@ $(document).ready(function() {
                         });
 
                         if ($("#fecha-devolucion-real").val() != "") {
-                            alert("La fecha de devolución real tiene un valor. ID última renta: " + ID_ultima_renta);
-                            var renta_completa = 1;
-                        } else {
-                            alert("El campo fecha de devolución real está vacío.");
-                        }
+                            var renta_completa = 1; //Para solicitar multa
+                        } 
 
                         setTimeout(function() {
                             limpiarCampos();
@@ -140,7 +141,7 @@ $(document).ready(function() {
 
                             if (renta_completa == 1) {
                                 if (confirm("¿Aplicar multa a esta renta?")) {
-                                    window.location.href = "gestion-multas.html?id=" + ID_ultima_renta;
+                                    window.location.href = "gesiton-multas.html?id=" + ID_ultima_renta; // Redirigir a la nueva página con el ID como parámetro
                                 }
                             }
                         }, 1000);
@@ -215,21 +216,25 @@ function traerDetalleRentas(ID_renta) {
         type: 'GET',
         dataType: 'json',
         crossDomain: true
-    }).done(function(result) {
+    }).done(function (result) {
+        //console.log(result.result.detalleRenta)
         result.result.detalleRenta.forEach(function(detalleRenta) {
             var ID_detalle_renta = detalleRenta.iD_detalle_renta;
             var ID_libro = detalleRenta.iD_libro;
             var ID_condicion = detalleRenta.iD_condicion;
+            var descripcion_condicion = detalleRenta.descripcion;
+            
             $('#tabla-cuerpo-detalle').append(`
                 <tr>
-                    <td data-id-libro="${ID_libro}">${ID_libro}</td>
-                    <td data-id-condicion="${ID_condicion}">${ID_condicion}</td>
-                    <td><button class="eliminar-posicion">Eliminar</button></td>
+                    <td data-id="${ID_detalle_renta}">${ID_libro}</td>
+                    <td data-id="${ID_condicion}">${descripcion_condicion}</td>
+                    <td><button class="eliminar-posicion" disabled>X</button></td>
                 </tr>
-            `);
+            `);    
         });
-    }).fail(function(xhr, status, error) {
-        alert("Hubo un problema al traer los detalles de la renta: " + error + "\nStatus: " + status);
+    }).fail(function (xhr, status, error) {
+        alert("Hubo un problema al traer los paises: " + error + "\nStatus: " + status);
+        console.error(xhr);
     });
 }
 
@@ -240,35 +245,92 @@ function traerRentas() {
         type: 'GET',
         dataType: 'json',
         crossDomain: true
-    }).done(function(result) {
-        result.result.rentas.forEach(function(renta) {
+    }).done(function (result) {
+        // console.log(result.result.renta)
+        result.result.renta.forEach(function(renta) {
+            var ID_renta = renta.iD_renta;
+            var fecha_renta = renta.fecha_renta.substring(0, 10);
+            var hora_renta = renta.fecha_renta.substring(11, 16);
+            var fecha_devolucion = renta.fecha_devolucion.substring(0, 10);
+            if (renta.fecha_devolucion_real == null){
+                var fecha_devolucion_real = 'N/A'    
+            } else {
+                var fecha_devolucion_real = renta.fecha_devolucion_real.substring(0, 10);
+            }
+            
+            var ID_cliente = renta.iD_cliente;
+            var ID_empleado = renta.iD_empleado;
+            
             $('#tabla-cuerpo').append(`
                 <tr>
-                    <td>${renta.iD_renta}</td>
-                    <td>${renta.fecha_renta}</td>
-                    <td>${renta.hora_renta}</td>
-                    <td>${renta.fecha_devolucion}</td>
-                    <td>${renta.fecha_devolucion_real}</td>
-                    <td>${renta.iD_cliente}</td>
-                    <td>${renta.iD_empleado}</td>
+                    <td>${ID_renta}</td>
+                    <td>${fecha_renta}</td>
+                    <td>${hora_renta}</td>
+                    <td>${fecha_devolucion}</td>
+                    <td>${fecha_devolucion_real}</td>
+                    <td>${ID_cliente}</td>
+                    
                 </tr>
-            `);
+            `);    
         });
-    }).fail(function(xhr, status, error) {
-        alert("Hubo un problema al traer las rentas: " + error + "\nStatus: " + status);
+    }).fail(function (xhr, status, error) {
+        alert("Hubo un problema al traer los paises: " + error + "\nStatus: " + status);
+        console.error(xhr);
     });
 }
 
 function traerDatosLibro(ID_libro) {
     $.ajax({
-        url: "https://localhost:7131/Libros/Traer/" + ID_libro,
+        url: "https://localhost:7131/Libros/TraerUno/" + ID_libro,
         type: 'GET',
         dataType: 'json',
         crossDomain: true
-    }).done(function(result) {
-        // Supongamos que estás agregando el libro a una tabla o algo similar
-        console.log(result);
-    }).fail(function(xhr, status, error) {
+    }).done(function (result) {
+        //console.log(result.result.libros)
+        result.result.libros.forEach(function(libros) {
+            var ID_libro = libros.iD_libro;
+            var titulo = libros.titulo;
+            var ID_condicion = libros.iD_condicion;
+            var descripcion_condicion = libros.descripcion_condicion;
+
+            $('#tabla-cuerpo-detalle').append(`
+                <tr>
+                    <td data-id-libro="${ID_libro}">${titulo}</td>
+                    <td data-id-condicion="${ID_condicion}">${descripcion_condicion}</td>
+                    <td><button class="eliminar-posicion">X</button></td>
+                </tr>
+            `); 
+            $('#id-libro').val('')
+                
+        });
+    }).fail(function (xhr, status, error) {
         alert("Hubo un problema al traer los datos del libro: " + error + "\nStatus: " + status);
+        console.error(xhr);
+    });
+}
+
+function guardarDetalleRenta(ID_ultima_renta) {
+    $('#tabla-cuerpo-detalle').find('tr').each(function() {
+        var ID_libro = $(this).find('td[data-id-libro]').data('id-libro');
+        var ID_condicion = $(this).find('td[data-id-condicion]').data('id-condicion');
+        
+        $.ajax({
+            
+            url: "https://localhost:7131/DetalleRentas/Guardar",
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            data: JSON.stringify({
+                "iD_renta": ID_ultima_renta,
+                "iD_libro": ID_libro,
+                "iD_condicion": ID_condicion
+            }),
+            success: function(response) {
+                console.log(ID_libro)
+            },
+            error: function(xhr, status, error) {
+                
+            }
+        });
     });
 }
