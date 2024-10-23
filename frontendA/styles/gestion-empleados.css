@@ -1,0 +1,12 @@
+#fila-calle, #fila-contrasena {
+    display: flex;
+    justify-content: center;
+}
+
+#fila-calle textarea, #fila-contrasena textarea {
+    width: 300px;
+}
+
+#fila-calle div, #fila-contrasena div {
+    width: 300px;
+}

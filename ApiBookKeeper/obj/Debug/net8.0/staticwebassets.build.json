@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "XmJJklzUXGaDsRAA3rm+Wn7CkWMs74fhJXF8fD4WQ8A=",
+  "Source": "ApiBookKeeper",
+  "BasePath": "_content/ApiBookKeeper",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

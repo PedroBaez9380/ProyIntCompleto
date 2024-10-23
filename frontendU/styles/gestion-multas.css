@@ -1,0 +1,23 @@
+#motivo-multa {
+    width: 100%;
+    height: 75%;
+}
+
+.fila-campos {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+#fila-multas div {
+    width: 100%;
+}
+
+textarea, select {
+    width: 200px;
+    height: 30px;
+}
+
+#fila-multas {
+    justify-content: start;
+}

@@ -1,0 +1,19 @@
+#fila-tipo-multa div {
+    width: 100%;
+}
+
+#fila-descripcion{
+    display: flex;
+    justify-content: center;
+}
+
+#descripcion {
+    width: 200%;
+    height: 200%;
+}
+
+#fila-descripcion div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

@@ -1,0 +1,12 @@
+#fila-calle {
+    display: flex;
+    justify-content: center;
+}
+
+#fila-calle textarea {
+    width: 300px;
+}
+
+#fila-calle div {
+    width: 300px;
+}
