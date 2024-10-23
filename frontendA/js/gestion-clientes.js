@@ -54,7 +54,7 @@ $(document).ready(function() {
             option = "Guardar"
             typemod = 'POST'
             ID = null;
-        } else {
+        }else{
             option = "Actualizar"
             typemod = 'PUT'
             ID = $("#id-cliente").val();
