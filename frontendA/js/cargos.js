@@ -36,6 +36,10 @@ $(document).ready(function() {
     });
 
     $('#boton-guardar').click(function() {
+        if ($("#rol").val() === "" || $("#descripcion").val().trim() === "") {
+        alert("Completa todos los campos antes de guardar.");
+        return;  // Evita que se continúe si no están los campos completos
+    }
         if ($("#id-cargo").val() === "" ){
             option = "Guardar"
             typemod = 'POST'
