@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BKo9goviRYOTiN8LpkDXCVnckGoNXAI7pVrXcNAPQ/iiQ7rkMvNYuXPnDHjWOOjisbU57JbqPnAgtjNLJuCRJw==",
+  "dgSpecHash": "FGY/N1f8aHdPgoL8y5y5DdlOAHjbJLGli6QOIZyOf8JHRsmNoI7VuEp5xIrKNKZHnU3UAPfIodXRbRBMCzWt8Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\pedro\\OneDrive - Universidad Autonoma de Nuevo León\\Clases sexto semestre\\Base de datos\\Proyecto biblioteca\\Proyectos\\ProyectoBookKeeper\\ApiBookKeeper\\ApiBookKeeper.csproj",
+  "projectFilePath": "C:\\Users\\pedro\\OneDrive - Universidad Autonoma de Nuevo León\\Clases septimo semestre\\Proyecto Integrador\\Proyecto biblioteca\\ProyectoBookKeeper\\ApiBookKeeper\\ApiBookKeeper.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pedro\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\pedro\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

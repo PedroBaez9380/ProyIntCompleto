@@ -13,5 +13,6 @@ namespace ApiBookKeeper.Models
         public int? ID_tipo_multa { get; set; }
         public string? Descripcion { get; set; }
         public int? ID_renta { get; set; }
+        public int? ID_cliente { get; set; }
     }
 }

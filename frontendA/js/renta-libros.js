@@ -16,6 +16,10 @@ $(document).ready(function() {
         $('#id-cliente').val($(this).find('td:eq(5)').text().trim());
         $('#id-empleado').val($(this).find('td:eq(6)').text().trim());
 
+        if($(this).find('td:eq(4)').text().trim() == "") {
+
+        }
+
         traerDetalleRentas(ID_renta);
         deshabilitarCampos();
     });
@@ -151,7 +155,7 @@ $(document).ready(function() {
                     });
                 } else {
                     console.error(response.message);
-                    alert("El cliente no está permitido para la renta.");
+                    alert(response.message);
                 }
             },
             error: function(xhr, status, error) {
@@ -286,6 +290,11 @@ function traerDatosLibro(ID_libro) {
         dataType: 'json',
         crossDomain: true
     }).done(function (result) {
+
+        if (result.result.libros == 0){
+            alert("Libro con el id " + ID_libro + " no encontrado" );
+            return;
+        }
         //console.log(result.result.libros)
         result.result.libros.forEach(function(libros) {
             var ID_libro = libros.iD_libro;

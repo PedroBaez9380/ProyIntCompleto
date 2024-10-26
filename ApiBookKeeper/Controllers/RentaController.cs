@@ -93,23 +93,22 @@ namespace ApiHBNS.Controllers
         public dynamic GuardarRenta(Renta Renta)
         {
             List<Parametro> parametros = new List<Parametro>
-            {
-                new Parametro("@Operacion", "INSERT"),
-                new Parametro("@Fecha_devolucion", Renta.Fecha_devolucion),
-                new Parametro("@ID_cliente", Renta.ID_cliente.ToString()),
-                new Parametro("@ID_empleado", Renta.ID_empleado.ToString()),
-            };
+    {
+        new Parametro("@Operacion", "INSERT"),
+        new Parametro("@Fecha_devolucion", Renta.Fecha_devolucion),
+        new Parametro("@ID_cliente", Renta.ID_cliente.ToString())
+    };
 
             dynamic result = DBDatos.Ejecutar("GestionRenta", parametros);
 
             return new
             {
-                success = result.exito.ToString(),
-                message = result.mensaje,
+                success = result.exito,
+                message = result.mensaje,  // El mensaje será "Exito" o el mensaje de error
                 result = ""
             };
-
         }
+
 
         [HttpPut]
         [Route("Actualizar")]

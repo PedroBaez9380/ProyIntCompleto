@@ -618,8 +618,7 @@ CREATE PROCEDURE [dbo].[GestionRenta]
     @Fecha_renta DATETIME = NULL,
     @Fecha_devolucion DATETIME = NULL,
     @Fecha_devolucion_real DATETIME = NULL,
-    @ID_cliente INT = NULL,
-    @ID_empleado INT = NULL
+    @ID_cliente INT = NULL
 AS
 BEGIN
     IF @Operacion = 'SELECT'
@@ -628,8 +627,35 @@ BEGIN
     END
     ELSE IF @Operacion = 'INSERT'
     BEGIN
+        -- Verificar si el cliente existe
+        IF NOT EXISTS (
+            SELECT 1 
+            FROM Cliente 
+            WHERE ID_cliente = @ID_cliente
+        )
+        BEGIN
+            -- Si el cliente no existe, lanzar un error
+            RAISERROR('Error: El cliente con ID %d no existe.', 16, 1, @ID_cliente);
+            RETURN; -- Termina el procedimiento aquí
+        END
+
+        -- Verificar si el cliente tiene Estado_renta activo
+        IF NOT EXISTS (
+            SELECT 1 
+            FROM Cliente 
+            WHERE ID_cliente = @ID_cliente 
+            AND Estado_renta = 1
+        )
+        BEGIN
+            -- Usar RAISERROR para que se pueda capturar el mensaje en la API
+            RAISERROR('Error: El cliente no está habilitado para realizar una renta.', 16, 1);
+            RETURN; -- Termina el procedimiento aquí
+        END
+
         INSERT INTO Renta (Fecha_renta, Fecha_devolucion, Fecha_devolucion_real, ID_cliente)
         VALUES (GETDATE(), @Fecha_devolucion, @Fecha_devolucion_real, @ID_cliente);
+
+        PRINT 'Renta insertada correctamente.';
     END
     ELSE IF @Operacion = 'UPDATE'
     BEGIN
@@ -644,6 +670,8 @@ BEGIN
     END
 END;
 GO
+
+
 
 CREATE PROCEDURE [dbo].[GestionDetalleRenta]
     @Operacion VARCHAR(10),
@@ -788,4 +816,15 @@ BEGIN
         ID_libro DESC;
 END;
 GO
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------Triggers----------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\
 

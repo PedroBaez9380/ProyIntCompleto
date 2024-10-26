@@ -7,7 +7,7 @@ namespace ApiBookKeeper.Recursos
 {
     public class DBDatos
     {
-        public static string cadenaConexion = "Data Source=DESKTOP-GA8DN52\\SQLEXPRESS;Initial Catalog=BookKeeperDB;Integrated Security=True;";
+        public static string cadenaConexion = "Data Source=DESKTOP-4LQIH7E\\SQLEXPRESS;Initial Catalog=BookKeeperDB;Integrated Security=True;";
         public static DataSet ListarTablas(string nombreProcedimiento, List<Parametro> parametros = null)
         {
             SqlConnection conexion = new SqlConnection(cadenaConexion);
@@ -101,7 +101,7 @@ namespace ApiBookKeeper.Recursos
                 return new
                 {
                     exito = exito,
-                    mensaje = "exito"
+                    mensaje = "Exito"
                 };
             }
             catch (Exception ex)
@@ -109,7 +109,7 @@ namespace ApiBookKeeper.Recursos
                 return new
                 {
                     exito = false,
-                    mensaje = ex.Message
+                    mensaje = ex.Message // Devuelve el mensaje de error de SQL
                 };
             }
             finally
@@ -117,6 +117,7 @@ namespace ApiBookKeeper.Recursos
                 conexion.Close();
             }
         }
+
     }
 
 }

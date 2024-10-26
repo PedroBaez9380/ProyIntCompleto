@@ -5191,11 +5191,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\pedro\\OneDrive - Universidad Autonoma de Nuevo León\\Clases sexto semestre\\Base de datos\\Proyecto biblioteca\\Proyectos\\ProyectoBookKeeper\\ApiBookKeeper\\ApiBookKeeper.csproj",
+      "projectUniqueName": "C:\\Users\\pedro\\OneDrive - Universidad Autonoma de Nuevo León\\Clases septimo semestre\\Proyecto Integrador\\Proyecto biblioteca\\ProyectoBookKeeper\\ApiBookKeeper\\ApiBookKeeper.csproj",
       "projectName": "ApiBookKeeper",
-      "projectPath": "C:\\Users\\pedro\\OneDrive - Universidad Autonoma de Nuevo León\\Clases sexto semestre\\Base de datos\\Proyecto biblioteca\\Proyectos\\ProyectoBookKeeper\\ApiBookKeeper\\ApiBookKeeper.csproj",
+      "projectPath": "C:\\Users\\pedro\\OneDrive - Universidad Autonoma de Nuevo León\\Clases septimo semestre\\Proyecto Integrador\\Proyecto biblioteca\\ProyectoBookKeeper\\ApiBookKeeper\\ApiBookKeeper.csproj",
       "packagesPath": "C:\\Users\\pedro\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\pedro\\OneDrive - Universidad Autonoma de Nuevo León\\Clases sexto semestre\\Base de datos\\Proyecto biblioteca\\Proyectos\\ProyectoBookKeeper\\ApiBookKeeper\\obj\\",
+      "outputPath": "C:\\Users\\pedro\\OneDrive - Universidad Autonoma de Nuevo León\\Clases septimo semestre\\Proyecto Integrador\\Proyecto biblioteca\\ProyectoBookKeeper\\ApiBookKeeper\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\pedro\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5218,6 +5218,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -5270,7 +5275,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
       }
     }
   },

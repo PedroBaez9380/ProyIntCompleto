@@ -39,6 +39,7 @@ namespace ApiHBNS.Controllers
                     Fecha_multa = row["Fecha_multa"] != DBNull.Value ? row["Fecha_multa"].ToString() : null,
                     ID_tipo_multa = row["ID_tipo_multa"] != DBNull.Value ? Convert.ToInt32(row["ID_tipo_multa"]) : (int?)null,
                     ID_renta = row["ID_renta"] != DBNull.Value ? Convert.ToInt32(row["ID_renta"]) : (int?)null,
+                    ID_cliente = row["ID_cliente"] != DBNull.Value ? Convert.ToInt32(row["ID_cliente"]) : (int?)null,
                 };
                 MultasList.Add(multa);
             }
