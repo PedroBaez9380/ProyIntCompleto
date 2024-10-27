@@ -33,12 +33,29 @@ $(document).ready(function() {
     });
 
     $('#boton-guardar').click(function() {
-        // Validar si los campos están llenos
+        // Validar si el campo de nombre está vacío
         if ($("#nombre").val().trim() === "") {
             alert("Por favor, llene todos los apartados para guardar.");
-            return; // Detener la ejecución si los campos están vacíos
+            return; // Detener la ejecución si el campo está vacío
         }
 
+        // Validar si el idioma ya existe en la tabla
+        let idiomaExistente = false;
+        $('#tabla-cuerpo tr').each(function() {
+            let nombreExistente = $(this).find('td:eq(1)').text().trim();
+            
+            if (nombreExistente.toLowerCase() === $("#nombre").val().trim().toLowerCase()) {
+                idiomaExistente = true;
+                return false; // Detener el bucle si se encuentra un duplicado
+            }
+        });
+        
+        if (idiomaExistente) {
+            alert("El idioma ya está registrado en el sistema.");
+            return; // Detener la ejecución si el idioma ya existe
+        }
+
+        // Definir opción de guardado o actualización
         var option, typemod, ID;
         if ($("#id-idioma").val() === "" ){
             option = "Guardar";
@@ -49,6 +66,7 @@ $(document).ready(function() {
             typemod = 'PUT';
             ID = $("#id-idioma").val();
         }
+        
         $.ajax({
             url: "https://localhost:7131/Idiomas/" + option,
             type: typemod,
