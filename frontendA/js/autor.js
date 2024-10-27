@@ -56,25 +56,30 @@ $(document).ready(function() {
             alert("Debe llenar todos los apartados para poder guardar.");
             return; // Detener la ejecución si los campos no están completos
         }
-    
-        // Validación: verificar si el autor ya existe en la tabla
-        let autorExistente = false;
+
+
+        const nombre = $("#nombre").val().trim();
+        const apellido = $("#apellido").val().trim();
+        let isDuplicate = false;
+
+        // Recorrer las filas de la tabla para verificar duplicados
         $('#tabla-cuerpo tr').each(function() {
-            let nombreExistente = $(this).find('td:eq(1)').text().trim();
-            let apellidoExistente = $(this).find('td:eq(2)').text().trim();
-    
-            if (nombreExistente === $("#nombre").val().trim() && apellidoExistente === $("#apellido").val().trim()) {
-                autorExistente = true;
-                return false; // Detener el bucle si se encuentra un duplicado
+            const nombreExistente = $(this).find('td').eq(1).text().trim();
+            const apellidoExistente = $(this).find('td').eq(2).text().trim();
+
+            // Comprobar si el nombre y apellido coinciden con un registro existente
+            if (nombre === nombreExistente && apellido === apellidoExistente) {
+                isDuplicate = true;
+                return false; // Detener el bucle
             }
         });
-    
-        if (autorExistente) {
-            alert("El autor ya existe en el sistema.");
-            return; // Detener la ejecución si el autor ya existe
+
+        // Si se encontró un duplicado, mostrar una alerta y detener la ejecución
+        if (isDuplicate) {
+            alert("Este autor ya existe. Por favor, ingrese un autor diferente.");
+            return;
         }
-    
-        // Determinar si es una nueva entrada o una actualización
+
         let option, typemod, ID;
         if ($("#id-autor").val() === "") {
             option = "Guardar";

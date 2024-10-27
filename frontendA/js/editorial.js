@@ -37,6 +37,24 @@ $(document).ready(function() {
             alert("Favor de introducir nombre de editorial");
             return;
         }
+
+         // Obtener el valor ingresado
+        var nuevoNombre = $('#nombre').val().trim().toLowerCase();
+        var duplicado = false;
+
+        // Verificar duplicados en la tabla
+        $('#tabla-cuerpo tr').each(function() {
+            var nombreActual = $(this).find('td').eq(1).text().trim().toLowerCase();
+            if (nuevoNombre === nombreActual) {
+                duplicado = true;
+                return false; // Detener el bucle each si se encuentra un duplicado
+            }
+        });
+
+        if (duplicado) {
+            alert("Esta editorial ya existe. Por favor, ingrese una editorial diferente.");
+            return;
+        }
         
         if ($("#id-editorial").val() === "" ){
             option = "Guardar"
