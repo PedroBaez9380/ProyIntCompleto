@@ -1,8 +1,18 @@
 $(document).ready(function() {
     traerPaises()
-    traerEstados()
-    traerMunicipios()
     traerClientes()
+
+    $('#pais').change(function() {
+        // Obtiene el valor seleccionado
+        var IDPaisSelected = $(this).find(":selected").val();
+        traerEstados(IDPaisSelected)
+    });
+
+    $('#estado').change(function() {
+        // Obtiene el valor seleccionado
+        var IDEstadoSelected = $(this).find(":selected").val();
+        traerMunicipios(IDEstadoSelected)
+    });
 
     $('#tabla-cuerpo').on('click', 'tr', function() {
         
@@ -121,8 +131,8 @@ function habilitarCampos() {
     $('#nombre').attr('disabled', false);
     $('#apellido').attr('disabled', false);
     $('#pais').attr('disabled', false);
-    $('#estado').attr('disabled', false);
-    $('#municipio').attr('disabled', false);
+    // $('#estado').attr('disabled', false);
+    // $('#municipio').attr('disabled', false);
     $('#correo').attr('disabled', false);
     $('#telefono').attr('disabled', false);
     // $('#fecha-contratacion').attr('disabled', false);
@@ -210,7 +220,38 @@ function traerPaises() {
     });
 }
 
-function traerEstados() {
+// function traerEstados() {
+//     $.ajax({
+//         url: "https://localhost:7131/Estados/Traer",
+//         type: 'GET',
+//         dataType: 'json',
+//         crossDomain: true
+//     }).done(function (result) {
+//         console.log(result.result.estado)
+//         result.result.estado.forEach(function(estado) {
+//             var ID_estado = estado.iD_estado;
+//             var Nombre = estado.nombre_estado;
+            
+//             $('#estado').append(`
+//                 <option value="${ID_estado}">${Nombre}</option>
+//             `);    
+//         });
+//     }).fail(function (xhr, status, error) {
+//         alert("Hubo un problema al traer los estados: " + error + "\nStatus: " + status);
+//         console.error(xhr);
+//     });
+// }
+
+function traerEstados(IDPaisSelected) {
+    $('#estado').empty();
+    $('#estado').append(`
+        <option selected">Seleccionar</option>
+    `); 
+    $('#municipio').empty();
+    $('#municipio').append(`
+        <option selected">Seleccionar</option>
+    `); 
+    $('#municipio').attr('disabled', true);
     $.ajax({
         url: "https://localhost:7131/Estados/Traer",
         type: 'GET',
@@ -221,18 +262,26 @@ function traerEstados() {
         result.result.estado.forEach(function(estado) {
             var ID_estado = estado.iD_estado;
             var Nombre = estado.nombre_estado;
+            var ID_pais = estado.iD_pais;
             
-            $('#estado').append(`
-                <option value="${ID_estado}">${Nombre}</option>
-            `);    
+            if(IDPaisSelected == ID_pais){
+                $('#estado').append(`
+                    <option value="${ID_estado}">${Nombre}</option>
+                `);      
+            }
         });
+        $('#estado').attr('disabled', false);
     }).fail(function (xhr, status, error) {
-        alert("Hubo un problema al traer los estados: " + error + "\nStatus: " + status);
+        alert("Hubo un problema al traer los municipios: " + error + "\nStatus: " + status);
         console.error(xhr);
     });
 }
 
-function traerMunicipios() {
+function traerMunicipios(IDEstadoSelected) {
+    $('#municipio').empty();
+    $('#municipio').append(`
+        <option selected">Seleccionar</option>
+    `); 
     $.ajax({
         url: "https://localhost:7131/Municipios/Traer",
         type: 'GET',
@@ -243,11 +292,15 @@ function traerMunicipios() {
         result.result.municipio.forEach(function(municipio) {
             var ID_municipio = municipio.iD_municipio;
             var Nombre = municipio.nombre_municipio;
+            var ID_estado = municipio.iD_estado;
             
-            $('#municipio').append(`
-                <option value="${ID_municipio}">${Nombre}</option>
-            `);    
+            if(IDEstadoSelected == ID_estado){
+                $('#municipio').append(`
+                    <option value="${ID_municipio}">${Nombre}</option>
+                `);      
+            }
         });
+        $('#municipio').attr('disabled', false);
     }).fail(function (xhr, status, error) {
         alert("Hubo un problema al traer los municipios: " + error + "\nStatus: " + status);
         console.error(xhr);

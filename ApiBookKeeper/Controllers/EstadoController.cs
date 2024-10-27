@@ -50,6 +50,44 @@ namespace ApiHBNS.Controllers
                 }
             };
         }
+
+        //[HttpGet]
+        //[Route("TraerEstadosDePais/{ID_pais}")]
+        //public dynamic listarLibro(int ID_libro)
+        //{
+        //    List<Parametro> parametros = new List<Parametro>
+        //        {
+        //            new Parametro("@Operacion", "SELECTMULTIPLE"),
+        //            new Parametro("@ID_libro", ID_libro.ToString()),
+        //        };
+
+        //    DataTable tLibros = DBDatos.Listar("GestionLibro", parametros);
+
+        //    // Funcion para convertir la DataTable a una lista de diccionarios
+        //    var LibrosList = new List<Dictionary<string, object>>();
+        //    foreach (DataRow row in tLibros.Rows)
+        //    {
+        //        var dict = new Dictionary<string, object>();
+        //        foreach (DataColumn col in tLibros.Columns)
+        //        {
+        //            dict[col.ColumnName] = row[col];
+        //        }
+        //        LibrosList.Add(dict);
+        //    }
+
+        //    string jsonLibros = JsonSerializer.Serialize(LibrosList);
+
+        //    return new
+        //    {
+        //        success = true,
+        //        message = "exito",
+        //        result = new
+        //        {
+        //            Libros = JsonSerializer.Deserialize<List<Libro>>(jsonLibros)
+        //        }
+        //    };
+        //}
+
         [HttpPost]
         [Route("Guardar")]
         public dynamic GuardarEstado(Estado Estado)
