@@ -56,6 +56,7 @@ $(document).ready(function() {
             alert("Debe llenar todos los apartados para poder guardar.");
             return; // Detener la ejecución si los campos no están completos
         }
+<<<<<<< HEAD
 
         const nombre = $("#nombre").val().trim();
         const apellido = $("#apellido").val().trim();
@@ -80,6 +81,10 @@ $(document).ready(function() {
         }
 
         if ($("#id-autor").val() === "" ){
+=======
+        let option, typemod, ID;
+        if ($("#id-autor").val() === "") {
+>>>>>>> 788939d2a3ea46f255e6551bbe7fa5db7002ba5e
             option = "Guardar";
             typemod = 'POST';
             ID = null;
@@ -88,9 +93,10 @@ $(document).ready(function() {
             typemod = 'PUT';
             ID = $("#id-autor").val();
         }
-
+    
+        // Realizar la solicitud AJAX
         $.ajax({
-            url: "https://localhost:7131/Autores/"+ option,
+            url: "https://localhost:7131/Autores/" + option,
             type: typemod,
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
@@ -100,23 +106,24 @@ $(document).ready(function() {
                 "apellido": $("#apellido").val(),
             }),
             crossDomain: true
-        }).done(function (result) {
+        }).done(function(result) {
             console.log(result);
             limpiarCampos();
             deshabilitarCampos();
             traerAutores();
             alert("Guardado exitoso!");
-
-        }).fail(function (xhr, status, error) {
+    
+        }).fail(function(xhr, status, error) {
             alert("Hubo un problema al guardar: " + error + "\nStatus: " + status);
             console.error(xhr);
         });
+    
         $('#boton-guardar').attr('disabled', true);
         $('#boton-nuevo').attr('disabled', false);
         $('#boton-modificacion').attr('disabled', true);
         $('#boton-borrar').attr('disabled', true);
     });
-
+    
     $('#boton-borrar').click(function() {
         $.ajax({
             url: "https://localhost:7131/Autores/Borrar",

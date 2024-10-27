@@ -2,7 +2,6 @@ $(document).ready(function() {
     traerUbicaciones();
 
     $('#tabla-cuerpo').on('click', 'tr', function() {
-        
         $('#boton-guardar').attr('disabled', true);
         $('#boton-nuevo').attr('disabled', false);
         $('#boton-modificacion').attr('disabled', false);
@@ -35,19 +34,39 @@ $(document).ready(function() {
     });
 
     $('#boton-guardar').click(function() {
-
         // Verificar si los campos están vacíos
         if ($("#seccion").val().trim() === "" || $("#estanteria").val().trim() === "") {
             alert("Debe llenar todos los apartados para poder guardar.");
             return; // Detener la ejecución si los campos no están completos
         }
 
+        // Verificar si estanteria es un número válido
         var estanteria = parseInt($('#estanteria').val(), 10);
         if (isNaN(estanteria)) {
-            alert("Favor de introducir una estanteria valida.");
+            alert("Favor de introducir una estantería válida.");
             return;
         }
 
+        // Validar si la combinación de seccion y estanteria ya existe
+        let ubicacionExistente = false;
+        $('#tabla-cuerpo tr').each(function() {
+            let seccionExistente = $(this).find('td:eq(1)').text().trim();
+            let estanteriaExistente = $(this).find('td:eq(2)').text().trim();
+            
+            if (seccionExistente.toLowerCase() === $("#seccion").val().trim().toLowerCase() &&
+                estanteriaExistente === $("#estanteria").val().trim()) {
+                ubicacionExistente = true;
+                return false; // Detener el bucle si se encuentra un duplicado
+            }
+        });
+        
+        if (ubicacionExistente) {
+            alert("La combinación de sección y estantería ya está registrada en el sistema.");
+            return; // Detener la ejecución si la ubicación ya existe
+        }
+
+        // Definir opción de guardado o actualización
+        var option, typemod, ID;
         if ($("#id-ubicacion").val() === "" ){
             option = "Guardar";
             typemod = 'POST';
@@ -57,6 +76,7 @@ $(document).ready(function() {
             typemod = 'PUT';
             ID = $("#id-ubicacion").val();
         }
+        
         $.ajax({
             url: "https://localhost:7131/Ubicaciones/" + option,
             type: typemod,
@@ -139,7 +159,6 @@ function habilitarCampos() {
     $('#seccion').attr('disabled', false);
     $('#estanteria').attr('disabled', false);
 }
-
 
 function traerUbicaciones() {
     $('#tabla-cuerpo').empty();
