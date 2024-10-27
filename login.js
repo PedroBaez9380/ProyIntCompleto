@@ -11,12 +11,19 @@ $(document).ready(function() {
             crossDomain: true
         }).done(function (result) {
             console.log(result.result.empleado)
-            result.result.empleado.forEach(function(empleado) {
-                var clave = empleado.clave
-                var ID_rol = empleado.iD_rol;
-                var estado_empleado = empleado.estado_empleado
-                comprobar_datos(clave, ID_rol, estado_empleado)
-            });
+
+            if (result.result.empleado == 0) {
+                alert("Usuario o contraseña incorrectos");
+
+            } else {
+                result.result.empleado.forEach(function(empleado) {
+                    var clave = empleado.clave
+                    var ID_rol = empleado.iD_rol;
+                    var estado_empleado = empleado.estado_empleado
+                    comprobar_datos(clave, ID_rol, estado_empleado)
+                });
+            }
+            
         }).fail(function (xhr, status, error) {
             alert("Hubo un problema al verificar el usuario: " + error + "\nStatus: " + status);
             console.error(xhr);
@@ -37,7 +44,7 @@ function comprobar_datos(clave, ID_rol, estado_empleado){
                 alert("Hubo un error al validar el rol");
             }
         } else{
-            alert("Contraseña incorrecta");
+            alert("Usuario o contraseña incorrectos");
         }
     } else {
         alert("El usuario se encuentra inactivo");
