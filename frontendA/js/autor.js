@@ -57,6 +57,28 @@ $(document).ready(function() {
             return; // Detener la ejecución si los campos no están completos
         }
 
+        const nombre = $("#nombre").val().trim();
+        const apellido = $("#apellido").val().trim();
+        let isDuplicate = false;
+
+        // Recorrer las filas de la tabla para verificar duplicados
+        $('#tabla-cuerpo tr').each(function() {
+            const nombreExistente = $(this).find('td').eq(1).text().trim();
+            const apellidoExistente = $(this).find('td').eq(2).text().trim();
+
+            // Comprobar si el nombre y apellido coinciden con un registro existente
+            if (nombre === nombreExistente && apellido === apellidoExistente) {
+                isDuplicate = true;
+                return false; // Detener el bucle
+            }
+        });
+
+        // Si se encontró un duplicado, mostrar una alerta y detener la ejecución
+        if (isDuplicate) {
+            alert("Este autor ya existe. Por favor, ingrese un autor diferente.");
+            return;
+        }
+
         if ($("#id-autor").val() === "" ){
             option = "Guardar";
             typemod = 'POST';

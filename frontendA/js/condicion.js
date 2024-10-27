@@ -33,6 +33,28 @@ $(document).ready(function() {
     });
 
     $('#boton-guardar').click(function() {
+
+        // Obtener la descripción ingresada
+        const descripcion = $('#descripcion').val().trim();
+        let isDuplicate = false;
+
+        // Recorrer las filas de la tabla para verificar duplicados
+        $('#tabla-cuerpo tr').each(function() {
+            const descripcionExistente = $(this).find('td').eq(1).text().trim(); // La columna Descripción es la segunda, por eso usamos `eq(1)`
+
+            // Comprobar si la descripción coincide con un registro existente
+            if (descripcion.toLowerCase() === descripcionExistente.toLowerCase()) { // Ignora mayúsculas/minúsculas
+                isDuplicate = true;
+                return false; // Detener el bucle
+            }
+        });
+
+        // Si se encontró un duplicado, mostrar una alerta y detener la ejecución
+        if (isDuplicate) {
+            alert("Esta condición ya existe. Por favor, ingrese una descripción diferente.");
+            return;
+        }
+
         if($('#descripcion').val() === ""){
             alert("Favor de introducir descripcion de la condicion");
             return;

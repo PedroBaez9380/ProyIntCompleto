@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ApiBookKeeper")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e8287cfd5bd827336b2a45374a2be6c7233e9f17")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6ed415f746bddffb4580e1e9fbd31504bfd84c73")]
 [assembly: System.Reflection.AssemblyProductAttribute("ApiBookKeeper")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ApiBookKeeper")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

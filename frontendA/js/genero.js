@@ -44,6 +44,23 @@ $(document).ready(function() {
             alert("El nombre solo debe contener letras");
             return;
         }
+
+         // Obtener el valor ingresado y verificar duplicados en la tabla
+        var nuevoNombre = $('#nombre').val().trim().toLowerCase();
+        var duplicado = false;
+
+        $('#tabla-cuerpo tr').each(function() {
+            var nombreActual = $(this).find('td').eq(1).text().trim().toLowerCase();
+            if (nuevoNombre === nombreActual) {
+                duplicado = true;
+                return false; // Detener el bucle each si se encuentra un duplicado
+            }
+        });
+
+        if (duplicado) {
+            alert("Este genero ya existe. Por favor, ingrese un genero diferente.");
+            return;
+        }
         
         if ($("#id-genero").val() === "" ){
             option = "Guardar"
