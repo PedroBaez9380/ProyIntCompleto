@@ -56,7 +56,7 @@ $(document).ready(function() {
             alert("Debe llenar todos los apartados para poder guardar.");
             return; // Detener la ejecución si los campos no están completos
         }
-<<<<<<< HEAD
+
 
         const nombre = $("#nombre").val().trim();
         const apellido = $("#apellido").val().trim();
@@ -80,11 +80,8 @@ $(document).ready(function() {
             return;
         }
 
-        if ($("#id-autor").val() === "" ){
-=======
         let option, typemod, ID;
         if ($("#id-autor").val() === "") {
->>>>>>> 788939d2a3ea46f255e6551bbe7fa5db7002ba5e
             option = "Guardar";
             typemod = 'POST';
             ID = null;
