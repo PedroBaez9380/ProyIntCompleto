@@ -7,6 +7,60 @@ $(document).ready(function() {
     traerGeneros()
     traerAutores()
 
+    $('#ano-publicacion').on('input', function () {
+        // Obtener el valor actual del campo
+        var value = $(this).val();
+    
+        // Eliminar cualquier carácter que no sea un número
+        value = value.replace(/[^0-9]/g, '');
+    
+        // Limitar el valor a un máximo de 4 dígitos
+        if (value.length > 4) {
+            value = value.slice(0, 4);
+        }
+    
+        // Actualizar el campo con el valor modificado
+        $(this).val(value);
+    });
+
+    // Restringir solo a números y un máximo de 5 caracteres
+    $('#n-paginas').on('input', function () {
+        // Obtener el valor actual del campo
+        var value = $(this).val();
+
+        // Eliminar cualquier carácter que no sea un número
+        value = value.replace(/[^0-9]/g, '');
+
+        // Limitar el valor a un máximo de 5 dígitos
+        if (value.length > 5) {
+            value = value.slice(0, 5);
+        }
+
+        // Actualizar el campo con el valor modificado
+        $(this).val(value);
+    });
+
+    $('#n-ISBN').on('input', function () {
+        // Obtener el valor actual del campo
+        var value = $(this).val();
+    
+        // Permitir solo números, guiones y la letra 'X' (en mayúsculas)
+        value = value.replace(/[^0-9Xx-]/g, '');
+    
+        // Convertir cualquier letra 'x' en mayúscula 'X'
+        value = value.replace(/x/g, 'X');
+    
+        // Limitar la longitud a un máximo de 13 caracteres
+        if (value.length > 13) {
+            value = value.slice(0, 13);
+        }
+    
+        // Actualizar el campo con el valor modificado
+        $(this).val(value);
+    });
+    
+
+
     $('#tabla-cuerpo').on('click', 'tr', function() {
         limpiarCampos()
         $('#boton-guardar').attr('disabled', true);
@@ -72,8 +126,8 @@ $(document).ready(function() {
         }
 
         var anoPublicacion = parseInt($('#ano-publicacion').val(), 10);
-        if (isNaN(anoPublicacion) || anoPublicacion < 1500 || anoPublicacion > 3000) {
-            alert("Favor de introducir un año de publicación válido (entre 1500 y 3000).");
+        if (isNaN(anoPublicacion) || anoPublicacion < 1799 || anoPublicacion > 3001) {
+            alert("Favor de introducir un año de publicación válido (entre 1800 y 3000).");
             return;
         }
 
@@ -101,6 +155,11 @@ $(document).ready(function() {
         if($('#condicion-libro').val() === "0"){
             alert("Favor de seleccionar una condicion");
             return;
+        }
+
+        if (!validarSeleccion('#autores', 'Por favor selecciona al menos un autor.') ||
+            !validarSeleccion('#generos', 'Por favor selecciona al menos un género.')) {
+            return; // Detener la ejecución si falta una selección en cualquiera de los grupos
         }
         /* Fin de validaciones */
 
@@ -558,6 +617,14 @@ function GuardarAutoresGeneros(ID_libro) {
             console.error(xhr);
         });
     });
+}
+
+function validarSeleccion(selector, mensajeError) {
+    if ($(selector + ' input[type="checkbox"]:checked').length === 0) {
+        alert(mensajeError);
+        return false;
+    }
+    return true;
 }
 
 

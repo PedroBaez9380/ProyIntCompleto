@@ -38,6 +38,12 @@ $(document).ready(function() {
             return;
         }
 
+        var regex = /[A-Za-z]/;
+        if (!regex.test($('#nombre').val())) {
+            alert("El nombre debe contener al menos una letra y no puede ser solo símbolos o números");
+            return;
+        }
+
          // Obtener el valor ingresado
         var nuevoNombre = $('#nombre').val().trim().toLowerCase();
         var duplicado = false;

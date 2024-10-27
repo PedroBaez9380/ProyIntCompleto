@@ -1,6 +1,14 @@
 $(document).ready(function() {
     traerGeneros()
 
+    $('#nombre').keypress(function (event) {
+        var regex = /^[A-Za-z]+$/;
+        var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        if (!regex.test(key)) {
+            event.preventDefault(); // Evita que se escriba el carácter si no es una letra
+        }
+    });
+
     $('#tabla-cuerpo').on('click', 'tr', function() {
         
         $('#boton-guardar').attr('disabled', true);
@@ -39,13 +47,13 @@ $(document).ready(function() {
             return;
         }
 
-        var regex = /^[A-Za-z]+$/;
-        if (!regex.test($('#nombre').val())) {
-            alert("El nombre solo debe contener letras");
-            return;
-        }
+        // var regex = /^[A-Za-z]+$/;
+        // if (!regex.test($('#nombre').val())) {
+        //     alert("El nombre solo debe contener letras");
+        //     return;
+        // }
 
-         // Obtener el valor ingresado y verificar duplicados en la tabla
+        // Obtener el valor ingresado y verificar duplicados en la tabla
         var nuevoNombre = $('#nombre').val().trim().toLowerCase();
         var duplicado = false;
 

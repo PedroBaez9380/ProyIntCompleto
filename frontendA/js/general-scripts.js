@@ -1,4 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
+
+    $('textarea').on('keypress', function (e) {
+        // Verifica si la tecla presionada es Enter (código 13)
+        if (e.which === 13) {
+            e.preventDefault(); // Evita la acción por defecto (insertar salto de línea)
+        }
+    });
+    
     var botonDesplegable = document.querySelector('#boton-multas-catalogo button');
     var contenedorMenu = document.querySelector('#boton-multas-catalogo .menu-desplegable');
 

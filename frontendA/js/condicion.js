@@ -1,6 +1,18 @@
 $(document).ready(function() {
     traerCondiciones()
 
+    // Restringir solo letras y símbolos, excluyendo números
+    $('#descripcion').on('input', function () {
+        // Obtener el valor actual del campo
+        var value = $(this).val();
+
+        // Eliminar cualquier carácter que no sea una letra o un símbolo
+        value = value.replace(/[^A-Za-z!@#$%^&*()_+{}\[\]:;"'<>,.?~`-]/g, '');
+
+        // Actualizar el campo con el valor modificado
+        $(this).val(value);
+    });
+
     $('#tabla-cuerpo').on('click', 'tr', function() {
         
         $('#boton-guardar').attr('disabled', true);
