@@ -4,7 +4,7 @@ $(document).ready(function() {
     $('#tabla-cuerpo').on('click', 'tr', function() {
         $('#boton-guardar').attr('disabled', true);
         $('#boton-nuevo').attr('disabled', false);
-        $('#boton-modificacion').attr('disabled', false);
+        
 
         var ID_renta = $(this).find('td:eq(0)').text().trim();
 
@@ -16,8 +16,10 @@ $(document).ready(function() {
         $('#id-cliente').val($(this).find('td:eq(5)').text().trim());
         $('#id-empleado').val($(this).find('td:eq(6)').text().trim());
 
-        if($(this).find('td:eq(4)').text().trim() == "") {
-
+        if($(this).find('td:eq(4)').text().trim() != "N/A") {
+            $('#boton-modificacion').attr('disabled', true);
+        } else {
+            $('#boton-modificacion').attr('disabled', false);
         }
 
         traerDetalleRentas(ID_renta);
@@ -41,9 +43,9 @@ $(document).ready(function() {
 
     $('#boton-modificacion').click(function() {
         deshabilitarCampos();
-        $('#fecha-devolucion-real').attr('disabled', false);
+        $('#fecha-devolucion-real').attr('disabled', true);
         $('#boton-guardar').attr('disabled', false);
-        $('#boton-nuevo').attr('disabled', true);
+        $('#boton-nuevo').attr('disabled', false);
         $('#boton-modificacion').attr('disabled', true);
         $('#boton-borrar').attr('disabled', true);
         $('#fecha-devolucion').attr('disabled', true);
@@ -96,7 +98,7 @@ $(document).ready(function() {
             crossDomain: true,
             success: function(response) {
                 var ID_ultima_renta;
-                if (response.success === "True") {
+                if (response.success === true) {
                     $.ajax({
                         url: "https://localhost:7131/Rentas/TraerUltimaRenta",
                         type: 'GET',
@@ -129,7 +131,7 @@ $(document).ready(function() {
                             });
                         });
 
-                        if ($("#fecha-devolucion-real").val() != "") {
+                        if ($('#id-cliente').is(':disabled')) {
                             var renta_completa = 1; //Para solicitar multa
                         } 
 

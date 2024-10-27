@@ -125,7 +125,7 @@ namespace ApiHBNS.Controllers
 
             return new
             {
-                success = result.exito.ToString(),
+                success = result.exito,
                 message = result.mensaje,
                 result = ""
             };
@@ -145,7 +145,7 @@ namespace ApiHBNS.Controllers
 
             return new
             {
-                success = result.exito.ToString(),
+                success = result.exito,
                 message = result.mensaje,
                 result = ""
             };

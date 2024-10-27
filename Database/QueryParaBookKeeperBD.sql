@@ -660,7 +660,7 @@ BEGIN
     ELSE IF @Operacion = 'UPDATE'
     BEGIN
         UPDATE Renta
-        SET Fecha_devolucion_real = @Fecha_devolucion_real
+        SET Fecha_devolucion_real = GETDATE()
         WHERE ID_renta = @ID_renta;
     END
     ELSE IF @Operacion = 'DELETE'
