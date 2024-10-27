@@ -56,8 +56,27 @@ $(document).ready(function() {
             alert("Debe llenar todos los apartados para poder guardar.");
             return; // Detener la ejecución si los campos no están completos
         }
-
-        if ($("#id-autor").val() === "" ){
+    
+        // Validación: verificar si el autor ya existe en la tabla
+        let autorExistente = false;
+        $('#tabla-cuerpo tr').each(function() {
+            let nombreExistente = $(this).find('td:eq(1)').text().trim();
+            let apellidoExistente = $(this).find('td:eq(2)').text().trim();
+    
+            if (nombreExistente === $("#nombre").val().trim() && apellidoExistente === $("#apellido").val().trim()) {
+                autorExistente = true;
+                return false; // Detener el bucle si se encuentra un duplicado
+            }
+        });
+    
+        if (autorExistente) {
+            alert("El autor ya existe en el sistema.");
+            return; // Detener la ejecución si el autor ya existe
+        }
+    
+        // Determinar si es una nueva entrada o una actualización
+        let option, typemod, ID;
+        if ($("#id-autor").val() === "") {
             option = "Guardar";
             typemod = 'POST';
             ID = null;
@@ -66,9 +85,10 @@ $(document).ready(function() {
             typemod = 'PUT';
             ID = $("#id-autor").val();
         }
-
+    
+        // Realizar la solicitud AJAX
         $.ajax({
-            url: "https://localhost:7131/Autores/"+ option,
+            url: "https://localhost:7131/Autores/" + option,
             type: typemod,
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
@@ -78,23 +98,24 @@ $(document).ready(function() {
                 "apellido": $("#apellido").val(),
             }),
             crossDomain: true
-        }).done(function (result) {
+        }).done(function(result) {
             console.log(result);
             limpiarCampos();
             deshabilitarCampos();
             traerAutores();
             alert("Guardado exitoso!");
-
-        }).fail(function (xhr, status, error) {
+    
+        }).fail(function(xhr, status, error) {
             alert("Hubo un problema al guardar: " + error + "\nStatus: " + status);
             console.error(xhr);
         });
+    
         $('#boton-guardar').attr('disabled', true);
         $('#boton-nuevo').attr('disabled', false);
         $('#boton-modificacion').attr('disabled', true);
         $('#boton-borrar').attr('disabled', true);
     });
-
+    
     $('#boton-borrar').click(function() {
         $.ajax({
             url: "https://localhost:7131/Autores/Borrar",
