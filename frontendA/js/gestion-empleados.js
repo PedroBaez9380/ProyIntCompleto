@@ -375,3 +375,12 @@ function traerMunicipios(IDEstadoSelected) {
         console.error(xhr);
     });
 }
+
+function validarTelefono(telefono) {
+    const regexTelefono = /^[0-9]+$/; // Permite solo dígitos del 0 al 9
+
+    if (!regexTelefono.test(telefono)) {
+        return "El número de teléfono solo debe contener números.";
+    }
+    return "Número de teléfono válido.";
+}
