@@ -306,3 +306,35 @@ function traerMunicipios(IDEstadoSelected) {
         console.error(xhr);
     });
 }
+
+function validarFechaNacimiento(fecha_nacimiento) {
+    // Obtener la fecha actual
+    const hoy = new Date();
+    const fechaActual = hoy.toISOString().split('T')[0]; // Formato YYYY-MM-DD
+
+    // Verificar que la fecha de nacimiento no sea la fecha actual
+    if (fecha_nacimiento === fechaActual) {
+        return "La fecha de nacimiento no puede ser la fecha actual.";
+    }
+
+    // Verificar que la fecha de nacimiento no esté ya registrada
+    const existeFecha = empleados.some(empleado => empleado.fecha_nacimiento === fechaNacimiento);
+
+    if (existeFecha) {
+        return "La fecha de nacimiento ya está registrada para otro empleado.";
+    }
+
+    // Si pasa todas las validaciones, es válida
+    return "Fecha de nacimiento válida.";
+}
+function validarCorreo(correo) {
+    if (!correo.includes("@")) {
+        return "El correo electrónico debe contener el símbolo '@'.";
+    }
+    return "Correo electrónico válido.";
+}
+
+const correo = "example.com"; // Correo a validar
+const resultado = validarCorreo(correo);
+
+console.log(resultado); 
