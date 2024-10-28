@@ -2,6 +2,11 @@ $(document).ready(function() {
     traerEstados()
     traerMunicipios()
 
+    //Validación de solo letras (con acentos) en el campo #nombre-municipio
+    $('#nombre-municipio').on('input', function() {
+        $(this).val($(this).val().replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, ''));
+    });
+
     $('#tabla-cuerpo').on('click', 'tr', function() {
         
         $('#boton-guardar').attr('disabled', true);
