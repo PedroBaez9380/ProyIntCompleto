@@ -46,7 +46,7 @@ $(document).ready(function() {
             return;
         }
         if (!/^\d{1,8}$/.test(tarifa)) {
-            alert("La tarifa debe ser un número de hasta 8 dígitos.");
+            alert("La tarifa debe ser un número de hasta 4 dígitos.");
             return;
         }
 
