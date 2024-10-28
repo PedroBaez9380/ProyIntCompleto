@@ -12,12 +12,12 @@
 
 INSERT INTO Rol (Descripcion) VALUES ('Admin'), ('Usuario');
 
-INSERT INTO Pais VALUES ('Mexico')
-INSERT INTO Estado VALUES ('Nuevo Leon', 1)
-INSERT INTO Municipio VALUES ('San Nicolas de los Garza', 1)
+--INSERT INTO Pais VALUES ('Mexico')
+--INSERT INTO Estado VALUES ('Nuevo Leon', 1)
+--INSERT INTO Municipio VALUES ('San Nicolas de los Garza', 1)
 
-INSERT INTO Cargo VALUES ('Gerente', 1)
-select * from cargo
+--INSERT INTO Cargo VALUES ('Gerente', 1)
+--select * from Cargo
 
 INSERT INTO Empleado (Nombre, Apellido, ID_pais, ID_estado, ID_municipio, Calle, Correo, Numero_telefono, Fecha_contratacion, Fecha_nacimiento, ID_cargo, Estado_empleado, Clave)
 VALUES ('Pedro Alberto', 'Baez Najera', 1, 1, 1, 'Av. Universidad', 'pedro.baeznjr@uanl.edu.mx', '8128644703', GETDATE(), '2004-04-27', 1, 1, 'admin')
@@ -25,6 +25,83 @@ VALUES ('Pedro Alberto', 'Baez Najera', 1, 1, 1, 'Av. Universidad', 'pedro.baezn
 SELECT * FROM EMPLEADO
 
 GO
+
+-- Pais
+INSERT INTO Pais (Nombre_pais) VALUES ('México'), ('Estados Unidos');
+
+-- Estado (asumiendo que México es ID_pais = 1, Estados Unidos es ID_pais = 2)
+INSERT INTO Estado (Nombre_estado, ID_pais) VALUES ('Jalisco', 1), ('California', 2);
+
+-- Municipio (asumiendo que Jalisco es ID_estado = 1, California es ID_estado = 2)
+INSERT INTO Municipio (Nombre_municipio, ID_estado) VALUES ('Guadalajara', 1), ('Los Angeles', 2);
+
+-- Condicion
+INSERT INTO Condicion (Descripcion) VALUES ('Nuevo'), ('Usado');
+
+-- Idioma
+INSERT INTO Idioma (Nombre) VALUES ('Español'), ('Inglés');
+
+-- Ubicacion
+INSERT INTO Ubicacion (Seccion, Estanteria) VALUES ('A', 1), ('B', 2);
+
+-- Editorial
+INSERT INTO Editorial (Nombre) VALUES ('Editorial Uno'), ('Editorial Dos');
+
+-- Genero
+INSERT INTO Genero (Nombre) VALUES ('Ficción'), ('Ciencia');
+
+-- Autor
+INSERT INTO Autor (Nombre, Apellido) VALUES ('Gabriel', 'García Márquez'), ('Isaac', 'Asimov');
+
+-- Rol
+INSERT INTO Rol (Descripcion) VALUES ('Admin'), ('Vendedor');
+
+-- Cargo (asumiendo que el rol Admin es ID_rol = 1 y Vendedor es ID_rol = 2)
+INSERT INTO Cargo (Descripcion, ID_rol) VALUES ('Manager', 1), ('Asistente', 2);
+
+-- TipoMulta
+INSERT INTO TipoMulta (Descripcion, Tarifa) VALUES ('Retraso', 50.00), ('Daño', 100.00);
+
+
+
+
+
+-- Empresa (asumiendo que Guadalajara es ID_municipio = 1)
+INSERT INTO Empresa (Nombre, ID_pais, ID_estado, ID_municipio, Calle, Numero_telefono, Correo) 
+VALUES ('Empresa ABC', 1, 1, 1, 'Av. Patria 123', '3312345678', 'contacto@empresaabc.com');
+
+-- Libro (asumiendo Editorial Uno es ID_editorial = 1, Ubicación A es ID_ubicacion = 1, Español es ID_idioma = 1, Nuevo es ID_condicion = 1)
+INSERT INTO Libro (Titulo, Numero_ISBN, ID_editorial, Year_publicacion, N_paginas, Tipo_pasta, ID_ubicacion, ID_idioma, ID_condicion) 
+VALUES ('Cien Años de Soledad', '9781234567897', 1, '1967-06-05', 417, 'D', 1, 1, 1);
+
+-- GeneroLibro (relación entre Genero y Libro)
+INSERT INTO GeneroLibro (ID_genero, ID_libro) VALUES (1, 1);
+
+-- AutorLibro (relación entre Autor y Libro)
+INSERT INTO AutorLibro (ID_autor, ID_libro) VALUES (1, 1);
+
+-- Empleado (asumiendo el cargo Manager es ID_cargo = 1)
+INSERT INTO Empleado (Nombre, Apellido, ID_pais, ID_estado, ID_municipio, Calle, Correo, Numero_telefono, Fecha_contratacion, Fecha_nacimiento, ID_cargo, Estado_empleado, Clave) 
+VALUES ('Juan', 'Pérez', 1, 1, 1, 'Av. Vallarta 321', 'juan.perez@empresa.com', '3312345678', '2023-01-01', '1990-05-10', 1, 1, 'ABC123');
+
+-- Cliente (asumiendo Guadalajara es ID_municipio = 1)
+INSERT INTO Cliente (Nombre, Apellido, ID_pais, ID_estado, ID_municipio, Calle, Correo, Numero_telefono, Fecha_registro, Fecha_nacimiento, Estado_renta) 
+VALUES ('Carlos', 'Hernández', 1, 1, 1, 'Calle 5 de Febrero 100', 'carlos@cliente.com', '3311122233', '2023-02-15', '1985-07-20', 1);
+
+-- Renta (asumiendo el cliente Carlos es ID_cliente = 1)
+INSERT INTO Renta (Fecha_renta, Fecha_devolucion, ID_cliente) 
+VALUES ('2024-01-10', '2024-01-17', 1);
+
+-- DetalleRenta (asumiendo la renta ID_renta = 1 y el libro ID_libro = 1)
+INSERT INTO DetalleRenta (ID_renta, ID_libro, ID_condicion) 
+VALUES (1, 1, 1);
+
+-- Multa (asumiendo la renta ID_renta = 1 y el tipo de multa Retraso es ID_tipo_multa = 1)
+INSERT INTO Multa (Motivo, Monto, Metodo_pago, Numero_tarjeta, Fecha_multa, ID_tipo_multa, ID_renta) 
+VALUES ('Retraso en devolución', 50.00, 'Tarjeta', '1234567890123456', '2024-01-18', 1, 1);
+
+
+
 
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -795,15 +872,15 @@ BEGIN
 END;
 GO
 --
-CREATE PROCEDURE [dbo].[Login]
-@ID_empleado INT
-AS
-BEGIN
-	SELECT e.Clave AS Clave, c.ID_rol As ID_rol, e.Estado_empleado FROM Empleado e
-	JOIN Cargo c ON e.ID_cargo = c.ID_cargo
-	WHERE ID_empleado = @ID_empleado
-END
-GO
+--CREATE PROCEDURE [dbo].[Login]
+--@ID_empleado INT
+--AS
+--BEGIN
+--	SELECT e.Clave AS Clave, c.ID_rol As ID_rol, e.Estado_empleado FROM Empleado e
+--	JOIN Cargo c ON e.ID_cargo = c.ID_cargo
+--	WHERE ID_empleado = @ID_empleado
+--END
+--GO
 
 CREATE PROCEDURE [dbo].[Login]
     @ID_empleado INT

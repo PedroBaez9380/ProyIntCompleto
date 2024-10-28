@@ -1,7 +1,16 @@
 --Comandos de definicion de la BD
+
+USE master;
+GO
+ALTER DATABASE BookKeeperDB
+SET SINGLE_USER
+WITH ROLLBACK IMMEDIATE;
+GO
 DROP DATABASE BookKeeperDB
 
 CREATE DATABASE BookKeeperDB;
+GO
+USE BookKeeperDB
 
 --Comandos de pais
 CREATE TABLE Pais (
