@@ -1,19 +1,22 @@
 $(document).ready(function() {
-    // Establecer la fecha mínima (mañana) para devolución esperada y real
-    var today = new Date();
-    today.setDate(today.getDate() + 1); // Sumar un día a la fecha actual para obtener mañana
-    var minDate = today.toISOString().split('T')[0];
+    let today = new Date();
+    let tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
 
-    $('#fecha-devolucion, #fecha-devolucion-real').attr('min', minDate);
+    // Formatear la fecha a YYYY-MM-DD
+    let minDate = tomorrow.toISOString().split('T')[0];
+    $('#fecha-devolucion').attr('min', minDate);
 
-    traerRentas();
+    traerRentas()
 
     $('#tabla-cuerpo').on('click', 'tr', function() {
+        
         $('#boton-guardar').attr('disabled', true);
         $('#boton-nuevo').attr('disabled', false);
+        $('#boton-modificacion').attr('disabled', false);
 
         var ID_renta = $(this).find('td:eq(0)').text().trim();
-
+        
         $('#id-renta').val(ID_renta);
         $('#fecha-renta').val($(this).find('td:eq(1)').text().trim());
         $('#hora-renta').val($(this).find('td:eq(2)').text().trim());
@@ -22,24 +25,20 @@ $(document).ready(function() {
         $('#id-cliente').val($(this).find('td:eq(5)').text().trim());
         $('#id-empleado').val($(this).find('td:eq(6)').text().trim());
 
-        if($(this).find('td:eq(4)').text().trim() != "N/A") {
-            $('#boton-modificacion').attr('disabled', true);
-        } else {
-            $('#boton-modificacion').attr('disabled', false);
-        }
 
-        traerDetalleRentas(ID_renta);
+        traerDetalleRentas(ID_renta)
         deshabilitarCampos();
     });
 
     $('.boton-agregar-posicion').click(function() {
         var ID_libro = $('#id-libro').val();
-        traerDatosLibro(ID_libro);
+
+        traerDatosLibro(ID_libro)
     });
 
     $('#boton-nuevo').click(function() {
-        habilitarCampos();
-        limpiarCampos();
+        habilitarCampos()
+        limpiarCampos() 
         $('#fecha-devolucion-real').attr('disabled', true);
         $('#boton-guardar').attr('disabled', false);
         $('#boton-nuevo').attr('disabled', true);
@@ -48,46 +47,27 @@ $(document).ready(function() {
     });
 
     $('#boton-modificacion').click(function() {
-        deshabilitarCampos();
-        $('#fecha-devolucion-real').attr('disabled', true);
+        deshabilitarCampos()
+        $('#fecha-devolucion-real').attr('disabled', false);
         $('#boton-guardar').attr('disabled', false);
-        $('#boton-nuevo').attr('disabled', false);
+        $('#boton-nuevo').attr('disabled', true);
         $('#boton-modificacion').attr('disabled', true);
         $('#boton-borrar').attr('disabled', true);
-        $('#fecha-devolucion').attr('disabled', true);
     });
 
+
     $('#boton-guardar').click(function() {
-        // Validación de campos vacíos
-        if ($("#fecha-devolucion").val() === "" || $("#id-cliente").val() === "" 
-        ) {
-            alert("Por favor, completa todos los campos obligatorios.");
-            return;
-        }
-
-        // Validación de ID
-        var ID_cliente = $("#id-cliente").val();
-        if (!/^\d{1,5}$/.test(ID_cliente)) {
-            alert("Los campos ID Cliente e ID Libro solo deben contener números y un máximo de 5 caracteres.");
-            return;
-        }
-
-        var option;
-        var typemod;
-        var ID;
-
-        if ($("#id-renta").val() === "") {
-            option = "Guardar";
-            typemod = 'POST';
+        if ($("#id-renta").val() === "" ){
+            option = "Guardar"
+            typemod = 'POST'
             ID = null;
         } else {
-            option = "Actualizar";
-            typemod = 'PUT';
+            option = "Actualizar"
+            typemod = 'PUT'
             ID = $("#id-renta").val();
         }
-        
         $.ajax({
-            url: "https://localhost:7131/Rentas/" + option,
+            url: "https://localhost:7131/Rentas/"+ option,
             type: typemod,
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
@@ -96,20 +76,21 @@ $(document).ready(function() {
                 "fecha_devolucion": $("#fecha-devolucion").val(),
                 "fecha_devolucion_real": $("#fecha-devolucion-real").val(),
                 "iD_cliente": $("#id-cliente").val(),
+                "iD_empleado": $("#id-empleado").val()
             }),
             crossDomain: true,
             success: function(response) {
-                var ID_ultima_renta;
-                if (response.success === true) {
+                if (response.success === "True") {
                     $.ajax({
                         url: "https://localhost:7131/Rentas/TraerUltimaRenta",
                         type: 'GET',
                         dataType: 'json',
                         crossDomain: true,
                         async: false
-                    }).done(function(result) {
+                    }).done(function (result) {
+                        console.log(result.result.renta)
                         result.result.renta.forEach(function(renta) {
-                            ID_ultima_renta = renta.iD_renta;
+                            var ID_ultima_renta = renta.iD_renta;
                             $('#tabla-cuerpo-detalle').find('tr').each(function() {
                                 var ID_libro = $(this).find('td[data-id-libro]').data('id-libro');
                                 var ID_condicion = $(this).find('td[data-id-condicion]').data('id-condicion');
@@ -125,90 +106,64 @@ $(document).ready(function() {
                                     }),
                                     success: function(response) {
                                         console.log(response.message);
+                                        
                                     },
                                     error: function(xhr, status, error) {
-                                        alert("Ocurrió un error");
+                                        alert("Ocurrio un error");
                                     }
                                 });
                             });
                         });
-
-                        if ($('#id-cliente').is(':disabled')) {
-                            var renta_completa = 1; //Para solicitar multa
-                        } 
-
-                        setTimeout(function() {
-                            limpiarCampos();
-                            deshabilitarCampos();
-                            traerRentas();
-                            alert("Guardado exitoso!");
-                            $('#boton-guardar').attr('disabled', true);
-                            $('#boton-nuevo').attr('disabled', false);
-                            $('#boton-modificacion').attr('disabled', true);
-                            $('#boton-borrar').attr('disabled', true);
-
-                            if (renta_completa == 1) {
-                                if (confirm("¿Aplicar multa a esta renta?")) {
-                                    window.location.href = "gesiton-multas.html?id=" + ID_ultima_renta; // Redirigir a la nueva página con el ID como parámetro
-                                }
-                            }
-                        }, 1000);
-                    }).fail(function(xhr, status, error) {
+                    }).fail(function (xhr, status, error) {
                         alert("Hubo un problema al extraer el id de renta: " + error + "\nStatus: " + status);
                         console.error(xhr);
                     });
+
+                    limpiarCampos()
+                    deshabilitarCampos()
+                    traerRentas()
+                    alert("Guardado exitoso!");
+                    $('#boton-guardar').attr('disabled', true);
+                    $('#boton-nuevo').attr('disabled', false);
+                    $('#boton-modificacion').attr('disabled', true);
+                    $('#boton-borrar').attr('disabled', true);
+
+                    
+                    
                 } else {
                     console.error(response.message);
-                    alert(response.message);
+                    alert("Hubo un problema al intentar guardar.");
                 }
             },
             error: function(xhr, status, error) {
                 console.error("Hubo un error en la solicitud:", error);
-                alert("Hubo un problema al comunicarse con el servidor.");
+                alert("Hubo un problema al intentar guardar.");
             }
-        });
-    });
-
-    // Validación de caracteres en idCliente e idLibro
-    $('#id-cliente, #id-libro').on('keypress', function(e) {
-        var charCode = (e.which) ? e.which : e.keyCode;
-        if (charCode < 48 || charCode > 57) { // Solo permitir números
-            e.preventDefault();
-        }
-    });
-
-    // Limitar el número de caracteres a 5
-    $('#id-cliente, #id-libro').on('input', function() {
-        if ($(this).val().length > 5) {
-            $(this).val($(this).val().slice(0, 5)); // Limitar a 5 caracteres
-        }
+        })
     });
 
     $(document).on('click', '.eliminar-posicion', function() {
         var fila = $(this).closest('tr');
         fila.remove();
     });
+
 });
 
-function limpiarCampos() {
+function limpiarCampos(){
     $('.fila-campos div textarea').val('');
     $('.fila-campos div select').val('default');
     $('#tabla-cuerpo-detalle').empty();
     $('#id-libro').val('');
-    $('#fecha-devolucion').val('');
-    $('#fecha-devolucion-real').val('');
 }
 
-function deshabilitarCampos() {
+function deshabilitarCampos(){
     $('.fila-campos div textarea').attr('disabled', true);
     $('.fila-campos div select').attr('disabled', true);
     $('#id-libro').attr('disabled', true);
     $('.boton-agregar-posicion').attr('disabled', true);
-    $('#fecha-devolucion').attr('disabled', true);
-    $('#fecha-devolucion-real').attr('disabled', true);
 }
 
-function habilitarCampos() {
+function habilitarCampos(){
     $('#fecha-devolucion').attr('disabled', false);
     $('#fecha-devolucion-real').attr('disabled', false);
     $('#id-cliente').attr('disabled', false);
@@ -223,22 +178,29 @@ function traerDetalleRentas(ID_renta) {
         url: "https://localhost:7131/DetalleRentas/Traer/" + ID_renta,
         type: 'GET',
         dataType: 'json',
-        crossDomain: true,
-        success: function(response) {
-            response.result.detalleRentas.forEach(function(detalle) {
-                var row = $('<tr>');
-                row.append($('<td>').text(detalle.iD_libro).data('id-libro', detalle.iD_libro));
-                row.append($('<td>').text(detalle.libro.nombre));
-                row.append($('<td>').text(detalle.iD_condicion).data('id-condicion', detalle.iD_condicion));
-                row.append($('<td>').append('<button class="eliminar-posicion">Eliminar</button>'));
-                $('#tabla-cuerpo-detalle').append(row);
-            });
-        },
-        error: function(xhr, status, error) {
-            console.error("Error al obtener detalle de rentas:", error);
-        }
+        crossDomain: true
+    }).done(function (result) {
+        //console.log(result.result.detalleRenta)
+        result.result.detalleRenta.forEach(function(detalleRenta) {
+            var ID_detalle_renta = detalleRenta.iD_detalle_renta;
+            var ID_libro = detalleRenta.iD_libro;
+            var ID_condicion = detalleRenta.iD_condicion;
+            var descripcion_condicion = detalleRenta.descripcion;
+            
+            $('#tabla-cuerpo-detalle').append(`
+                <tr>
+                    <td data-id="${ID_detalle_renta}">${ID_libro}</td>
+                    <td data-id="${ID_condicion}">${descripcion_condicion}</td>
+                    <td><button class="eliminar-posicion" disabled>X</button></td>
+                </tr>
+            `);    
+        });
+    }).fail(function (xhr, status, error) {
+        alert("Hubo un problema al traer los paises: " + error + "\nStatus: " + status);
+        console.error(xhr);
     });
 }
+
 
 function traerRentas() {
     $('#tabla-cuerpo').empty();
@@ -271,7 +233,7 @@ function traerRentas() {
                     <td>${fecha_devolucion}</td>
                     <td>${fecha_devolucion_real}</td>
                     <td>${ID_cliente}</td>
-                    
+                    <td>${ID_empleado}</td>
                 </tr>
             `);    
         });
@@ -288,11 +250,6 @@ function traerDatosLibro(ID_libro) {
         dataType: 'json',
         crossDomain: true
     }).done(function (result) {
-
-        if (result.result.libros == 0){
-            alert("Libro con el id " + ID_libro + " no encontrado" );
-            return;
-        }
         //console.log(result.result.libros)
         result.result.libros.forEach(function(libros) {
             var ID_libro = libros.iD_libro;
@@ -341,3 +298,4 @@ function guardarDetalleRenta(ID_ultima_renta) {
         });
     });
 }
+

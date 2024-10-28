@@ -2,6 +2,12 @@ $(document).ready(function() {
     traerPaises()
     traerEstados()
 
+    // Restricción para el campo nombre-estado para que solo permita letras
+    $('#nombre-estado').on('input', function() {
+        // Reemplaza cualquier carácter que no sea letra con una cadena vacía
+        $(this).val($(this).val().replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, ''));
+    });
+
     $('#tabla-cuerpo').on('click', 'tr', function() {
         
         $('#boton-guardar').attr('disabled', true);

@@ -1,6 +1,11 @@
 $(document).ready(function() {
     traerPaises()
 
+    // 1. Validación de solo letras en el campo #nombre (impide escribir números y caracteres especiales)
+    $('#nombre').on('input', function() {
+        $(this).val($(this).val().replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, ''));
+    });
+
     $('#tabla-cuerpo').on('click', 'tr', function() {
         
         $('#boton-guardar').attr('disabled', true);
@@ -35,6 +40,12 @@ $(document).ready(function() {
 
     $('#boton-guardar').click(function() {
 
+        // Validación de longitud mínima del nombre antes de guardar
+        if ($("#nombre").val().trim().length < 3) {
+            alert("El nombre del país debe tener al menos 3 letras.");
+            return;
+        }
+        
         if ($("#nombre").val().trim() === "") {
             alert("Por favor complete el campo de nombre del país.");
             return; // Detiene el proceso si el campo no está completo
