@@ -49,6 +49,24 @@ $(document).ready(function() {
             return; // Detiene el proceso si los campos no están completos
         }
 
+        // Obtener el valor ingresado
+        var nuevoNombre = $('#nombre-estado').val().trim().toLowerCase();
+        var duplicado = false;
+
+        // Verificar duplicados en la tabla
+        $('#tabla-cuerpo tr').each(function() {
+            var nombreActual = $(this).find('td').eq(1).text().trim().toLowerCase();
+            if (nuevoNombre === nombreActual) {
+                duplicado = true;
+                return false; // Detener el bucle each si se encuentra un duplicado
+            }
+        });
+
+        if (duplicado) {
+            alert("Esta Estado ya existe. Por favor, ingrese un Estado diferente.");
+            return;
+        }
+
         if ($("#id-estado").val() === "" ){
             option = "Guardar"
             typemod = 'POST'

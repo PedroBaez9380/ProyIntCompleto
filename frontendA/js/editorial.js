@@ -44,7 +44,7 @@ $(document).ready(function() {
             return;
         }
 
-         // Obtener el valor ingresado
+        // Obtener el valor ingresado
         var nuevoNombre = $('#nombre').val().trim().toLowerCase();
         var duplicado = false;
 

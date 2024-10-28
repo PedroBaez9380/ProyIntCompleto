@@ -50,6 +50,24 @@ $(document).ready(function() {
             alert("Por favor complete el campo de nombre del país.");
             return; // Detiene el proceso si el campo no está completo
         }
+
+        // Obtener el valor ingresado
+        var nuevoNombre = $('#nombre').val().trim().toLowerCase();
+        var duplicado = false;
+
+        // Verificar duplicados en la tabla
+        $('#tabla-cuerpo tr').each(function() {
+            var nombreActual = $(this).find('td').eq(1).text().trim().toLowerCase();
+            if (nuevoNombre === nombreActual) {
+                duplicado = true;
+                return false; // Detener el bucle each si se encuentra un duplicado
+            }
+        });
+
+        if (duplicado) {
+            alert("Esta Pais ya existe. Por favor, ingrese un Pais diferente.");
+            return;
+        }
         
         if ($("#id-pais").val() === "" ){
             option = "Guardar"

@@ -53,6 +53,24 @@ $(document).ready(function() {
             alert("Por favor seleccione un estado.");
             return; // Detiene el proceso si no se ha seleccionado un estado
         }
+
+        // Obtener el valor ingresado
+        var nuevoNombre = $('#nombre-municipio').val().trim().toLowerCase();
+        var duplicado = false;
+
+        // Verificar duplicados en la tabla
+        $('#tabla-cuerpo tr').each(function() {
+            var nombreActual = $(this).find('td').eq(1).text().trim().toLowerCase();
+            if (nuevoNombre === nombreActual) {
+                duplicado = true;
+                return false; // Detener el bucle each si se encuentra un duplicado
+            }
+        });
+
+        if (duplicado) {
+            alert("Esta Municipio ya existe. Por favor, ingrese un Municipio diferente.");
+            return;
+        }
         
         if ($("#id-municipio").val() === "" ){
             option = "Guardar"
