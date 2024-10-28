@@ -15,6 +15,24 @@ $(document).ready(function() {
         $('#id-renta').val(idRentaNueva)
     }
 
+        // Deshabilitar el campo de tarjeta por defecto
+    $('#n-tarjeta').attr('disabled', true);
+
+    // Habilita o deshabilita el campo de tarjeta basado en el método de pago seleccionado
+    $('#metodo-pago').change(function() {
+        if ($(this).val() === "TARJETA") {
+            $('#n-tarjeta').attr('disabled', false); // Activa el campo si se selecciona "TARJETA"
+        } else {
+            $('#n-tarjeta').val('');  // Limpia el campo si no es tarjeta
+            $('#n-tarjeta').attr('disabled', true); // Desactiva el campo si no es tarjeta
+        }
+    });
+
+    // Solo permite números en el campo de número de tarjeta
+    $('#n-tarjeta').on('input', function() {
+        this.value = this.value.replace(/[^0-9]/g, '');  // Reemplaza cualquier carácter no numérico con nada
+    });
+
     $('#tabla-cuerpo').on('click', 'tr', function() {
         
         $('#boton-guardar').attr('disabled', true);
@@ -175,7 +193,7 @@ function deshabilitarCampos(){
 function habilitarCampos(){
     $('#motivo-multa').attr('disabled', false); 
     $('#metodo-pago').attr('disabled', false); 
-    $('#n-tarjeta').attr('disabled', false); 
+    $('#n-tarjeta').attr('disabled', false);  // Mantener deshabilitado hasta seleccionar "TARJETA"
     $('#tipo-multa').attr('disabled', false); 
     $('#id-renta').attr('disabled', false); 
 }
