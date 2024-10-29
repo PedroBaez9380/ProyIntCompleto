@@ -368,10 +368,17 @@ function validarTelefono(numero_telefono) {
    
 }
 
-$('#boton-guardar').click(function() {
-        // Validación: verificar si los campos están vacíos
-        if ($("#nombre").val().trim() === "" || $("#apellido").val().trim() === "") {
-            alert("Debe llenar todos los apartados para poder guardar.");
-            return; // Detener la ejecución si los campos no están completos
-        }
-
+function validarSoloLetras(campo) {
+    var valorCampo = campo.value;
+    // Limitar a 30 caracteres
+    if (valorCampo.length > 30) {
+        campo.value = valorCampo.substring(0, 30);
+        alert('El máximo permitido es de 30 caracteres.');
+    }
+    // Expresión regular que permite solo letras y espacios
+    if (/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/.test(valorCampo)) {
+        // Reemplaza los caracteres que no sean letras
+        campo.value = valorCampo.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
+        alert('Solo se permiten letras. No se permiten números.');
+    }
+}
