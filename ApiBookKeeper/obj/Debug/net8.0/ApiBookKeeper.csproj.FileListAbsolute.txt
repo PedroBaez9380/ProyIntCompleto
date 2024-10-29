@@ -499,9 +499,9 @@ C:\Users\pedro\OneDrive - Universidad Autonoma de Nuevo León\Clases septimo sem
 C:\Users\pedro\OneDrive - Universidad Autonoma de Nuevo León\Clases septimo semestre\Proyecto Integrador\Proyecto biblioteca\ProyectoBookKeeper\ApiBookKeeper\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.ApiBookKeeper.props
 C:\Users\pedro\OneDrive - Universidad Autonoma de Nuevo León\Clases septimo semestre\Proyecto Integrador\Proyecto biblioteca\ProyectoBookKeeper\ApiBookKeeper\obj\Debug\net8.0\staticwebassets.pack.json
 C:\Users\pedro\OneDrive - Universidad Autonoma de Nuevo León\Clases septimo semestre\Proyecto Integrador\Proyecto biblioteca\ProyectoBookKeeper\ApiBookKeeper\obj\Debug\net8.0\scopedcss\bundle\ApiBookKeeper.styles.css
-C:\Users\pedro\OneDrive - Universidad Autonoma de Nuevo León\Clases septimo semestre\Proyecto Integrador\Proyecto biblioteca\ProyectoBookKeeper\ApiBookKeeper\obj\Debug\net8.0\ApiBookK.159B08BB.Up2Date
 C:\Users\pedro\OneDrive - Universidad Autonoma de Nuevo León\Clases septimo semestre\Proyecto Integrador\Proyecto biblioteca\ProyectoBookKeeper\ApiBookKeeper\obj\Debug\net8.0\ApiBookKeeper.dll
 C:\Users\pedro\OneDrive - Universidad Autonoma de Nuevo León\Clases septimo semestre\Proyecto Integrador\Proyecto biblioteca\ProyectoBookKeeper\ApiBookKeeper\obj\Debug\net8.0\refint\ApiBookKeeper.dll
 C:\Users\pedro\OneDrive - Universidad Autonoma de Nuevo León\Clases septimo semestre\Proyecto Integrador\Proyecto biblioteca\ProyectoBookKeeper\ApiBookKeeper\obj\Debug\net8.0\ApiBookKeeper.pdb
 C:\Users\pedro\OneDrive - Universidad Autonoma de Nuevo León\Clases septimo semestre\Proyecto Integrador\Proyecto biblioteca\ProyectoBookKeeper\ApiBookKeeper\obj\Debug\net8.0\ApiBookKeeper.genruntimeconfig.cache
 C:\Users\pedro\OneDrive - Universidad Autonoma de Nuevo León\Clases septimo semestre\Proyecto Integrador\Proyecto biblioteca\ProyectoBookKeeper\ApiBookKeeper\obj\Debug\net8.0\ref\ApiBookKeeper.dll
+C:\Users\pedro\OneDrive - Universidad Autonoma de Nuevo León\Clases septimo semestre\Proyecto Integrador\Proyecto biblioteca\ProyectoBookKeeper\ApiBookKeeper\obj\Debug\net8.0\ApiBookKeeper.csproj.CopyComplete

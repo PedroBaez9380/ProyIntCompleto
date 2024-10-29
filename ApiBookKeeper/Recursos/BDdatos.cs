@@ -7,7 +7,7 @@ namespace ApiBookKeeper.Recursos
 {
     public class DBDatos
     {
-        public static string cadenaConexion = "Data Source=DESKTOP-4LQIH7E\\SQLEXPRESS;Initial Catalog=BookKeeperDB;Integrated Security=True;";
+        public static string cadenaConexion = "Data Source=DESKTOP-GA8DN52\\SQLEXPRESS;Initial Catalog=BookKeeperDB;Integrated Security=True;";
         public static DataSet ListarTablas(string nombreProcedimiento, List<Parametro> parametros = null)
         {
             SqlConnection conexion = new SqlConnection(cadenaConexion);

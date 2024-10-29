@@ -49,7 +49,7 @@ $(document).ready(function() {
     
         $('#boton-modificacion').click(function() {
             deshabilitarCampos();
-            $('#fecha-devolucion-real').attr('disabled', false);
+            $('#fecha-devolucion-real').attr('disabled', true);
             $('#boton-guardar').attr('disabled', false);
             $('#boton-nuevo').attr('disabled', true);
             $('#boton-modificacion').attr('disabled', true);
@@ -214,7 +214,7 @@ $(document).ready(function() {
     
     function habilitarCampos() {
         $('#fecha-devolucion').attr('disabled', false);
-        $('#fecha-devolucion-real').attr('disabled', false);
+        $('#fecha-devolucion-real').attr('disabled', true);
         $('#id-cliente').attr('disabled', false);
         $('#id-empleado').attr('disabled', false);
         $('#id-libro').attr('disabled', false);

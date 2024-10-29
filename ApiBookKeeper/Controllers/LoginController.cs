@@ -20,13 +20,36 @@ namespace ApiHBNS.Controllers
         public dynamic listarusuario(int ID_empleado)
         {
             List<Parametro> parametros = new List<Parametro>
-                {
-                    new Parametro("@ID_empleado", ID_empleado.ToString()),
-                }; 
+    {
+        new Parametro("@ID_empleado", ID_empleado.ToString()),
+    };
 
+            // Ejecutar el procedimiento y verificar si tEmpleado es nulo
             DataTable tEmpleado = DBDatos.Listar("Login", parametros);
 
-            // Funcion para convertir la DataTable a una lista de diccionarios
+            // Si tEmpleado es nulo, retornar mensaje de error
+            if (tEmpleado == null)
+            {
+                return new
+                {
+                    success = false,
+                    message = "Usuario o contraseña incorretos",
+                    result = (object)null
+                };
+            }
+
+            // Si no se encontraron filas, retornar mensaje de que el empleado no existe
+            if (tEmpleado.Rows.Count == 0 || tEmpleado.Rows[0]["Clave"] == DBNull.Value)
+            {
+                return new
+                {
+                    success = false,
+                    message = "El empleado no existe",
+                    result = (object)null
+                };
+            }
+
+            // Convertir DataTable a lista de diccionarios
             var EmpleadoList = new List<Dictionary<string, object>>();
             foreach (DataRow row in tEmpleado.Rows)
             {
@@ -38,18 +61,18 @@ namespace ApiHBNS.Controllers
                 EmpleadoList.Add(dict);
             }
 
-            string jsonUsuario = JsonSerializer.Serialize(EmpleadoList);
-
             return new
             {
                 success = true,
                 message = "exito",
                 result = new
                 {
-                    Empleado = JsonSerializer.Deserialize<List<Login>>(jsonUsuario)
+                    Empleado = EmpleadoList
                 }
             };
         }
+
+
 
     }
 }
