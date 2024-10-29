@@ -48,6 +48,14 @@ $(document).ready(function() {
         $('#boton-nuevo').attr('disabled', true);
         $('#boton-modificacion').attr('disabled', true);
         $('#boton-borrar').attr('disabled', true);
+        
+        $('#nombre').on('input', function() {
+            validarSoloLetras(this);
+        });
+        $('#apellido').on('input', function() {
+            validarSoloLetras(this);
+        });
+    });
     });
 
     $('#boton-modificacion').click(function() {
