@@ -64,6 +64,14 @@ $(document).ready(function() {
         $('#boton-nuevo').attr('disabled', false);
         $('#boton-modificacion').attr('disabled', true);
         $('#boton-borrar').attr('disabled', true);
+        
+        // Asigna la validación de solo letras a los campos cuando se habiliten
+        $('#nombre').on('input', function() {
+            validarSoloLetras(this);
+        });
+        $('#apellido').on('input', function() {
+            validarSoloLetras(this);
+        });
     });
 
     $('#boton-guardar').click(function() {
