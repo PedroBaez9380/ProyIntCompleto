@@ -347,7 +347,9 @@ function validarTelefono(numero_telefono) {
     if (!regexTelefono.test(telefono)) {
         return "El número de teléfono solo debe contener números.";
     }
-    return "Número de teléfono válido.";
+    else "Número de teléfono válido.";
+        this.value = this.value.replace(/[^0-9]/g, '');  // Reemplaza cualquier carácter no numérico con nada
+   
 }
 
 $('#boton-guardar').click(function() {
