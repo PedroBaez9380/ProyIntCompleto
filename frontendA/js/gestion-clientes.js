@@ -317,12 +317,14 @@ function validarFechaNacimiento(fecha_nacimiento) {
         return "La fecha de nacimiento no puede ser la fecha actual.";
     }
 
-    // Verificar que la fecha de nacimiento no esté ya registrada
-    const existeFecha = empleados.some(empleado => empleado.fecha_nacimiento === fechaNacimiento);
+     $('#descripcion').on('input', function () {
+        
+        var value = $(this).val();
 
-    if (existeFecha) {
-        return "La fecha de nacimiento ya está registrada para otro empleado.";
-    }
+        value = value.replace(/[^A-Za-z!@#$%^&*()_+{}\[\]:;"'<>,.?~`-]/g, '');
+
+        
+    });
 
     // Si pasa todas las validaciones, es válida
     return "Fecha de nacimiento válida.";
@@ -339,7 +341,7 @@ const resultado = validarCorreo(correo);
 
 console.log(resultado); 
 
-function validarTelefono(telefono) {
+function validarTelefono(numero_telefono) {
     const regexTelefono = /^[0-9]+$/; // Permite solo dígitos del 0 al 9
 
     if (!regexTelefono.test(telefono)) {
