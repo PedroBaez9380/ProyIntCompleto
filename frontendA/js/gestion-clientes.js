@@ -349,3 +349,10 @@ function validarTelefono(numero_telefono) {
     }
     return "Número de teléfono válido.";
 }
+
+$('#boton-guardar').click(function() {
+        // Validación: verificar si los campos están vacíos
+        if ($("#nombre").val().trim() === "" || $("#apellido").val().trim() === "") {
+            alert("Debe llenar todos los apartados para poder guardar.");
+            return; // Detener la ejecución si los campos no están completos
+        }
