@@ -55,6 +55,12 @@ $(document).ready(function() {
             $('#boton-modificacion').attr('disabled', true);
             $('#boton-borrar').attr('disabled', true);
             $('#fecha-devolucion').attr('disabled', true);
+
+            if (!$('#fecha-devolucion-real').val()) {
+                let today = new Date();
+                let formattedDate = today.toISOString().split('T')[0]; // Formatear a YYYY-MM-DD
+                $('#fecha-devolucion-real').val(formattedDate);
+            }
         });
     
         $('#boton-guardar').click(function() {
