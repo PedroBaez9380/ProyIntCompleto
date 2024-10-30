@@ -137,9 +137,10 @@ $(document).ready(function() {
                                 });
                             });
     
-                            if ($("#fecha-devolucion-real").val() != "") {
-                                var renta_completa = 1; //Para solicitar multa
-                            } 
+                            if ($("#fecha-renta").val() != "") {
+                                var renta_completa = 1; // Para solicitar multa
+                            }
+                            
     
                             setTimeout(function() {
                                 limpiarCampos();

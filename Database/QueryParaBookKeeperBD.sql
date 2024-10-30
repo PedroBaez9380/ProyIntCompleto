@@ -688,6 +688,7 @@ BEGIN
     END
 END;
 GO
+
 --
 CREATE PROCEDURE [dbo].[GestionRenta]
     @Operacion VARCHAR(10),

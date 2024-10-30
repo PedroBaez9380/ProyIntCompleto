@@ -21,10 +21,10 @@ $(document).ready(function() {
                 // alert(result.message);
             } else {
                 // Procesar la lista de empleados
-                result.result.Empleado.forEach(function(empleado) {
-                    var clave = empleado.Clave;
-                    var ID_rol = empleado.ID_rol;
-                    var estado_empleado = empleado.Estado_empleado;
+                result.result.empleado.forEach(function(empleado) {
+                    var clave = empleado.clave;
+                    var ID_rol = empleado.iD_rol;
+                    var estado_empleado = empleado.estado_empleado;
                     comprobar_datos(clave, ID_rol, estado_empleado);
                 });
             }
