@@ -104,7 +104,7 @@ $(document).ready(function() {
                 crossDomain: true,
                 success: function(response) {
                     var ID_ultima_renta;
-                    if (response.success === "True") {
+                    if (response.success === true) {
                         $.ajax({
                             url: "https://localhost:7131/Rentas/TraerUltimaRenta",
                             type: 'GET',

@@ -873,74 +873,32 @@ BEGIN
 END;
 GO
 --
---CREATE PROCEDURE [dbo].[Login]
---@ID_empleado INT
---AS
---BEGIN
---	SELECT e.Clave AS Clave, c.ID_rol As ID_rol, e.Estado_empleado FROM Empleado e
---	JOIN Cargo c ON e.ID_cargo = c.ID_cargo
---	WHERE ID_empleado = @ID_empleado
---END
---GO
-
---CREATE PROCEDURE [dbo].[Login]
---    @ID_empleado INT
---AS
---BEGIN
---    -- Verificar si el empleado existe
---    IF NOT EXISTS (
---        SELECT 1 
---        FROM Empleado 
---        WHERE ID_empleado = @ID_empleado
---    )
---    BEGIN
---        -- Si el empleado no existe, lanzar un error
---        RAISERROR('Error: El empleado con ID %d no existe.', 16, 1, @ID_empleado);
---        RETURN; -- Termina el procedimiento aquí
---    END
-
---    -- Si el empleado existe, realizar la consulta
---    SELECT 
---        e.Clave AS Clave, 
---        c.ID_rol AS ID_rol, 
---        e.Estado_empleado 
---    FROM Empleado e
---    JOIN Cargo c ON e.ID_cargo = c.ID_cargo
---    WHERE e.ID_empleado = @ID_empleado;
---END
---GO
-
 CREATE PROCEDURE [dbo].[Login]
     @ID_empleado INT
 AS
 BEGIN
     -- Verificar si el empleado existe
-    IF EXISTS (
+    IF NOT EXISTS (
         SELECT 1 
         FROM Empleado 
         WHERE ID_empleado = @ID_empleado
     )
     BEGIN
-        -- Si el empleado existe, realizar la consulta
-        SELECT 
-            e.Clave AS Clave, 
-            c.ID_rol AS ID_rol, 
-            e.Estado_empleado 
-        FROM Empleado e
-        JOIN Cargo c ON e.ID_cargo = c.ID_cargo
-        WHERE e.ID_empleado = @ID_empleado;
+        -- Si el empleado no existe, lanzar un error
+        RAISERROR('Error: El empleado con ID %d no existe.', 16, 1, @ID_empleado);
+        RETURN; -- Termina el procedimiento aquí
     END
-    ELSE
-    BEGIN
-        -- Si el empleado no existe, devolver un resultado vacío
-        SELECT 
-            NULL AS Clave, 
-            NULL AS ID_rol, 
-            NULL AS Estado_empleado;
-    END
+
+    -- Si el empleado existe, realizar la consulta
+    SELECT 
+        e.Clave AS Clave, 
+        c.ID_rol AS ID_rol, 
+        e.Estado_empleado 
+    FROM Empleado e
+    JOIN Cargo c ON e.ID_cargo = c.ID_cargo
+    WHERE e.ID_empleado = @ID_empleado;
 END
 GO
-DROP PROCEDURE LOGIN
 
 
 CREATE PROCEDURE [dbo].[ObtenerUltimoLibro]
