@@ -15,7 +15,10 @@ $(document).ready(function() {
         $('#id-renta').val(idRentaNueva)
     }
 
-        // Deshabilitar el campo de tarjeta por defecto
+    // Agrega la opción "RETRASO" por defecto en el tipo de multa
+    $('#tipo-multa').append('<option value="RETRASO" data-mnt="10">RETRASO</option>');
+
+    // Deshabilita el campo de tarjeta por defecto
     $('#n-tarjeta').attr('disabled', true);
 
     // Habilita o deshabilita el campo de tarjeta basado en el método de pago seleccionado
@@ -28,9 +31,12 @@ $(document).ready(function() {
         }
     });
 
-    // Solo permite números en el campo de número de tarjeta
+    // Solo permite números en el campo de número de tarjeta y limita a menos de 16 dígitos
     $('#n-tarjeta').on('input', function() {
-        this.value = this.value.replace(/[^0-9]/g, '');  // Reemplaza cualquier carácter no numérico con nada
+        this.value = this.value.replace(/[^0-9]/g, '');  // Reemplaza cualquier carácter no numérico
+        if (this.value.length > 16) {
+            this.value = this.value.slice(0, 16); // Limita a 16 caracteres
+        }
     });
 
     $('#tabla-cuerpo').on('click', 'tr', function() {
