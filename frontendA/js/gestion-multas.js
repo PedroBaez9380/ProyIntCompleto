@@ -193,7 +193,7 @@ function deshabilitarCampos(){
 function habilitarCampos(){
     $('#motivo-multa').attr('disabled', false); 
     $('#metodo-pago').attr('disabled', false); 
-    $('#n-tarjeta').attr('disabled', false);  // Mantener deshabilitado hasta seleccionar "TARJETA"
+    $('#n-tarjeta').attr('disabled', true);  // Mantener deshabilitado hasta seleccionar "TARJETA"
     $('#tipo-multa').attr('disabled', false); 
     $('#id-renta').attr('disabled', false); 
 }
@@ -255,7 +255,7 @@ function traerTiposMultas() {
             `);    
         });
     }).fail(function (xhr, status, error) {
-        alert("Hubo un problema al traer los paises: " + error + "\nStatus: " + status);
+        alert("Hubo un problema al traer los tipos de multa: " + error + "\nStatus: " + status);
         console.error(xhr);
     });
 }

@@ -24,8 +24,8 @@ $(document).ready(function() {
             $('#id-cliente').val($(this).find('td:eq(5)').text().trim());
             $('#id-empleado').val($(this).find('td:eq(6)').text().trim());
 
-            if($(this).find('td:eq(4)').text().trim() == "") {
-
+            if($(this).find('td:eq(4)').text().trim() != "N/A") {
+                $('#boton-modificacion').attr('disabled', true);
             }
 
             traerDetalleRentas(ID_renta);
@@ -246,7 +246,7 @@ $(document).ready(function() {
                 `);    
             });
         }).fail(function (xhr, status, error) {
-            alert("Hubo un problema al traer los paises: " + error + "\nStatus: " + status);
+            alert("Hubo un problema al traer el detalle de las rentas: " + error + "\nStatus: " + status);
             console.error(xhr);
         });
     }
@@ -287,7 +287,7 @@ $(document).ready(function() {
                 `);    
             });
         }).fail(function (xhr, status, error) {
-            alert("Hubo un problema al traer los paises: " + error + "\nStatus: " + status);
+            alert("Hubo un problema al traer las rentas: " + error + "\nStatus: " + status);
             console.error(xhr);
         });
     }

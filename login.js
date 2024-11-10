@@ -17,14 +17,14 @@ $(document).ready(function() {
         }).done(function (result) {
             // Verificar si la solicitud fue exitosa y si el empleado existe
             if (!result.success) {
-                alert("Usuario o contraseña incorrectos");
+                alert("Usuario inactivo o datos incorrectos"); //datos incorrectos, el empleado no existe
                 // alert(result.message);
             } else {
                 // Procesar la lista de empleados
                 result.result.empleado.forEach(function(empleado) {
-                    var clave = empleado.clave;
-                    var ID_rol = empleado.iD_rol;
-                    var estado_empleado = empleado.estado_empleado;
+                    var clave = empleado.Clave;
+                    var ID_rol = empleado.ID_rol;
+                    var estado_empleado = empleado.Estado_empleado;
                     comprobar_datos(clave, ID_rol, estado_empleado);
                 });
             }
@@ -49,10 +49,10 @@ function comprobar_datos(clave, ID_rol, estado_empleado){
                 alert("Hubo un error al validar el rol");
             }
         } else{
-            alert("Usuario o contraseña incorrectos");
+            alert("Usuario inactivo o datos incorrectos"); //Datos incorrectos, contraseña incorrecta
         }
     } else {
-        alert("El usuario se encuentra inactivo");
+        alert("Usuario inactivo o datos incorrectos"); //Usuario inactivo
     }
     
 }

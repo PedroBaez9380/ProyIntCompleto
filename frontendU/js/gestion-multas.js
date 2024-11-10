@@ -224,7 +224,7 @@ function traerTiposMultas() {
             `);    
         });
     }).fail(function (xhr, status, error) {
-        alert("Hubo un problema al traer los paises: " + error + "\nStatus: " + status);
+        alert("Hubo un problema al traer los tipos de multas: " + error + "\nStatus: " + status);
         console.error(xhr);
     });
 }
