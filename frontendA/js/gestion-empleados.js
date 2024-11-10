@@ -145,6 +145,7 @@ function limpiarCampos(){
 function deshabilitarCampos(){
     $('.fila-campos div textarea').attr('disabled', true);
     $('.fila-campos div select').attr('disabled', true);
+    $('#fecha-nacimiento').attr('disabled', true);
 }
 
 function habilitarCampos() {
