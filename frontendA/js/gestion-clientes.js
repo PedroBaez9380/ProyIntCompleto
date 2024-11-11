@@ -17,6 +17,10 @@ $(document).ready(function() {
     $('#correo').on('input', function() {
     $(this).val($(this).val().replace(/[^a-zA-Z0-9@._-]/g, ''));
     });
+
+    $('#telefono').on('input', function() {
+    $(this).val($(this).val().replace(/[^0-9]/g, ''));
+    });
     
     $('#pais').change(function() {
         // Obtiene el valor seleccionado
